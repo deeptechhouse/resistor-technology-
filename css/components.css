@@ -1,0 +1,322 @@
+/* ============================================================
+   COMPONENTS.CSS — Reusable UI Components
+   Resistor Technology · resistor.technology
+   ============================================================ */
+
+/* --- Section Container --- */
+.section {
+  position: relative;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.section__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* --- Section Headers --- */
+.section-header {
+  margin-bottom: var(--space-xl);
+}
+
+.section-header__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.section-header__title {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+.section-header__tagline {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
+
+/* --- Accent Colors per Section --- */
+.accent-brass .section-header__title,
+.accent-brass .section-header__label { color: var(--color-brass); }
+
+.accent-amethyst .section-header__title,
+.accent-amethyst .section-header__label { color: var(--color-amethyst-light); }
+
+.accent-teal .section-header__title,
+.accent-teal .section-header__label { color: var(--color-teal-light); }
+
+/* --- Feature Cards --- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition:
+    transform var(--duration-med) var(--ease-out),
+    box-shadow var(--duration-med) var(--ease-out),
+    border-color var(--duration-med);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-color: var(--color-border-light);
+}
+
+.card__icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.card__description {
+  font-size: var(--fs-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-loose);
+}
+
+/* Card accent variants */
+.accent-brass .card:hover { border-color: var(--color-brass-dark); }
+.accent-amethyst .card:hover { border-color: var(--color-amethyst-dark); }
+.accent-teal .card:hover { border-color: var(--color-teal-dark); }
+
+/* --- Bento Grid --- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.bento-grid .card--wide {
+  grid-column: span 2;
+}
+
+.bento-grid .card--tall {
+  grid-row: span 2;
+}
+
+/* --- Tech Badges --- */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  background: var(--color-surface);
+}
+
+.accent-brass .badge { border-color: var(--color-brass-dark); color: var(--color-brass); }
+.accent-amethyst .badge { border-color: var(--color-amethyst-dark); color: var(--color-amethyst-light); }
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-sm);
+  transition:
+    transform var(--duration-fast),
+    box-shadow var(--duration-med),
+    background var(--duration-med);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--brass {
+  background: var(--color-brass);
+  color: var(--color-bg);
+}
+
+.btn--brass:hover {
+  background: var(--color-brass-light);
+  box-shadow: 0 0 20px rgba(196, 166, 122, calc(0.3 * var(--glow-intensity)));
+}
+
+.btn--amethyst {
+  background: var(--color-amethyst);
+  color: var(--color-text-primary);
+}
+
+.btn--amethyst:hover {
+  background: var(--color-amethyst-light);
+  box-shadow: 0 0 20px rgba(106, 74, 138, calc(0.3 * var(--glow-intensity)));
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text-secondary);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-primary);
+}
+
+/* --- Link Underline Animation --- */
+.link-animated {
+  position: relative;
+  display: inline-block;
+}
+
+.link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--duration-med) var(--ease-out);
+}
+
+.link-animated:hover::after {
+  width: 100%;
+}
+
+/* --- Stat Highlights --- */
+.stats {
+  display: flex;
+  gap: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--color-brass);
+}
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* --- Editorial Split Layout --- */
+.editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.editorial--reversed {
+  direction: rtl;
+}
+
+.editorial--reversed > * {
+  direction: ltr;
+}
+
+.editorial__sticky {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-lg));
+}
+
+.editorial__content {
+  padding-top: var(--space-lg);
+}
+
+/* --- Product Mockup --- */
+.mockup {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.mockup__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  background: linear-gradient(135deg, var(--color-surface), var(--color-surface-raised));
+}
+
+.mockup--scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* --- Feature List (within editorial) --- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* --- Scroll Reveal Animation --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--delay-1 { transition-delay: 100ms; }
+.reveal--delay-2 { transition-delay: 200ms; }
+.reveal--delay-3 { transition-delay: 300ms; }
+.reveal--delay-4 { transition-delay: 400ms; }

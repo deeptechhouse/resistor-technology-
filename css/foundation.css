@@ -1,0 +1,223 @@
+/* ============================================================
+   FOUNDATION.CSS — Design Tokens & Base Styles
+   Resistor Technology · resistor.technology
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* --- Design Tokens --- */
+:root {
+  /* Color Palette: "Bunker + Brass" */
+  --color-bg:              #0a0a0c;
+  --color-surface:         #14141a;
+  --color-surface-raised:  #1e1e24;
+  --color-border:          #2a2a30;
+  --color-border-light:    #3a3a40;
+
+  --color-text-primary:    #d8d5cd;
+  --color-text-secondary:  #9a9a9e;
+  --color-text-muted:      #6a6a70;
+
+  --color-brass:           #c4a67a;
+  --color-brass-light:     #d4be88;
+  --color-brass-dark:      #a08050;
+  --color-amethyst:        #6a4a8a;
+  --color-amethyst-light:  #a080c0;
+  --color-amethyst-dark:   #4a2a6a;
+  --color-teal:            #4a8a7a;
+  --color-teal-light:      #6aaa9a;
+  --color-teal-dark:       #2a6a5a;
+
+  --color-white:           #ffffff;
+  --color-black:           #000000;
+
+  /* Typography */
+  --font-display:  'Space Grotesk', sans-serif;
+  --font-body:     'Inter', sans-serif;
+  --font-mono:     'IBM Plex Mono', monospace;
+
+  --fs-hero:       clamp(2.5rem, 5vw, 4.5rem);
+  --fs-h1:         clamp(2rem, 4vw, 3.5rem);
+  --fs-h2:         clamp(1.5rem, 3vw, 2.5rem);
+  --fs-h3:         clamp(1.125rem, 2vw, 1.5rem);
+  --fs-body:       1rem;
+  --fs-small:      0.875rem;
+  --fs-xs:         0.75rem;
+
+  --lh-tight:      1.2;
+  --lh-normal:     1.6;
+  --lh-loose:      1.8;
+
+  --ls-wide:       0.15em;
+  --ls-wider:      0.25em;
+
+  /* Spacing */
+  --space-xs:      0.25rem;
+  --space-sm:      0.5rem;
+  --space-md:      1rem;
+  --space-lg:      2rem;
+  --space-xl:      4rem;
+  --space-2xl:     6rem;
+  --space-3xl:     8rem;
+
+  /* Layout */
+  --max-width:     1200px;
+  --nav-height:    64px;
+
+  /* Borders */
+  --radius-sm:     4px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --radius-full:   9999px;
+
+  /* Transitions */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-med:  300ms;
+  --duration-slow: 600ms;
+
+  /* Interactive controls (set by JS) */
+  --grain-opacity:    0.04;
+  --glow-intensity:   0.5;
+  --parallax-depth:   0.5;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* --- Typography Base --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* --- Film Grain Overlay --- */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+}
+
+.grain-overlay svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Skip to Content (A11y) --- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-brass);
+  color: var(--color-bg);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  border-radius: var(--radius-sm);
+  z-index: 10001;
+  transition: top var(--duration-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+/* --- Selection --- */
+::selection {
+  background: var(--color-brass);
+  color: var(--color-bg);
+}
+
+/* --- Focus Visible --- */
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 2px;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .grain-overlay {
+    display: none;
+  }
+}

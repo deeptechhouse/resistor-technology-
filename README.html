@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README — Resistor Technology Site</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0c; color: #d8d5cd; padding: 2rem; max-width: 800px; margin: 0 auto; line-height: 1.7; }
+    h1 { font-family: 'Space Grotesk', sans-serif; color: #c4a67a; font-size: 2rem; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    h2 { font-family: 'Space Grotesk', sans-serif; color: #9a9a9e; font-size: 1.25rem; margin-top: 2.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a30; }
+    h3 { color: #d8d5cd; font-size: 1rem; margin-top: 1.5rem; }
+    p { margin: 0.75rem 0; color: #d8d5cd; }
+    code { font-family: 'IBM Plex Mono', monospace; background: #14141a; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.875rem; color: #c4a67a; }
+    pre { background: #14141a; border: 1px solid #2a2a30; border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem; line-height: 1.5; color: #d8d5cd; margin: 1rem 0; }
+    ul, ol { padding-left: 1.5rem; margin: 0.75rem 0; }
+    li { margin: 0.35rem 0; }
+    a { color: #c4a67a; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+    a:hover { border-bottom-color: #c4a67a; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { text-align: left; padding: 0.5rem 1rem; border-bottom: 1px solid #1e1e24; font-size: 0.875rem; }
+    th { color: #6a6a70; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; padding: 0.15rem 0.5rem; border: 1px solid #2a2a30; border-radius: 999px; color: #9a9a9e; margin-right: 0.5rem; }
+    .subtitle { color: #9a9a9e; font-size: 1rem; margin-top: 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Resistor Technology</h1>
+  <p class="subtitle">Company website — <a href="https://resistor.technology">resistor.technology</a></p>
+
+  <p>
+    <span class="badge">Static Site</span>
+    <span class="badge">No Build Step</span>
+    <span class="badge">MIT License</span>
+  </p>
+
+  <h2>Description</h2>
+  <p>
+    Single-page static website for Resistor Technology, a company building tools for underground music culture.
+    Showcases two products: <strong>raiveFlier</strong> (AI rave flier research tool) and <strong>Resistor</strong>
+    (self-booking tour platform for musicians). Features an interactive synthesizer-styled hero section with
+    draggable knobs, faders, and a scroll-driven VU meter.
+  </p>
+
+  <h2>Setup / Quick Start</h2>
+
+  <h3>Prerequisites</h3>
+  <ul>
+    <li>Any modern web browser (Chrome, Firefox, Safari, Edge)</li>
+    <li>No build tools, Node.js, or package managers required</li>
+  </ul>
+
+  <h3>Run Locally</h3>
+  <p>Open <code>index.html</code> directly in a browser, or serve with any static server:</p>
+  <pre>cd /Users/aaandy/_andy_ai_projects_2026/resistor-technology-site
+python3 -m http.server 8080</pre>
+  <p>Then open <a href="http://localhost:8080">http://localhost:8080</a></p>
+
+  <h2>Architecture Overview</h2>
+  <p>Pure HTML + CSS + vanilla JavaScript. Zero dependencies, zero build step.</p>
+
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Files</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Structure</td><td><code>index.html</code></td><td>Single-page layout with semantic sections</td></tr>
+      <tr><td>Design Tokens</td><td><code>css/foundation.css</code></td><td>Colors, typography, spacing, reset</td></tr>
+      <tr><td>Components</td><td><code>css/components.css</code></td><td>Cards, buttons, badges, grid layouts</td></tr>
+      <tr><td>Synth GUI</td><td><code>css/synth-elements.css</code></td><td>Knobs, faders, VU meter, LEDs</td></tr>
+      <tr><td>Page Layout</td><td><code>css/main.css</code></td><td>Nav, sections, responsive breakpoints</td></tr>
+      <tr><td>Interactivity</td><td><code>js/synth-hero.js</code></td><td>Knob/fader drag, VU meter, patch jack</td></tr>
+      <tr><td>Animation</td><td><code>js/scroll-animations.js</code></td><td>Scroll reveals, LED indicators</td></tr>
+      <tr><td>Navigation</td><td><code>js/main.js</code></td><td>Nav blur, mobile menu, smooth scroll</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Design System</h2>
+  <p>The "Bunker + Brass" palette draws from the shared design language of both products:</p>
+  <ul>
+    <li><strong>Brass (#c4a67a)</strong> — Resistor product accent, primary brand color</li>
+    <li><strong>Amethyst (#6a4a8a)</strong> — raiveFlier product accent</li>
+    <li><strong>Teal (#4a8a7a)</strong> — Technology/trust sections</li>
+    <li><strong>Bunker (#0a0a0c)</strong> — Dark base palette with warm undertones</li>
+  </ul>
+  <p>Typography: Space Grotesk (display), Inter (body), IBM Plex Mono (technical/labels).</p>
+
+  <h2>Interactive Features</h2>
+  <ul>
+    <li><strong>GRAIN knob</strong> — Controls film grain overlay opacity across the page</li>
+    <li><strong>GLOW knob</strong> — Controls accent color glow intensity on interactive elements</li>
+    <li><strong>DEPTH fader</strong> — Controls parallax depth for scroll animations</li>
+    <li><strong>VU meter</strong> — Needle responds to scroll velocity in real time</li>
+    <li><strong>Section LEDs</strong> — Light up as corresponding sections enter the viewport</li>
+    <li><strong>OUTPUT patch jack</strong> — Smooth-scrolls to contact section</li>
+  </ul>
+
+  <h2>Accessibility</h2>
+  <ul>
+    <li>WCAG 2.1 AA compliant color contrast (parchment on bunker-900 &asymp; 12:1 ratio)</li>
+    <li>Semantic HTML5 landmarks (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>)</li>
+    <li>All interactive elements have <code>aria-label</code>, <code>role="slider"</code> or <code>role="button"</code></li>
+    <li>Keyboard navigation for knobs, faders, and patch jack (Arrow keys, Tab, Enter)</li>
+    <li>Skip-to-content link</li>
+    <li><code>prefers-reduced-motion</code> fully supported — all animations disabled</li>
+    <li>Focus-visible rings on all interactive elements</li>
+  </ul>
+
+  <h2>Deployment</h2>
+  <p>Deployed as a Render static site:</p>
+  <ol>
+    <li>Build command: <code>echo "No build needed"</code></li>
+    <li>Publish path: <code>.</code> (root)</li>
+    <li>Custom domain: <code>resistor.technology</code></li>
+    <li>HTTPS enforced automatically</li>
+  </ol>
+
+  <h2>License</h2>
+  <p>MIT License &copy; 2026 Resistor Technology</p>
+
+</body>
+</html>

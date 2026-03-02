@@ -1,0 +1,474 @@
+/* ============================================================
+   SYNTH-ELEMENTS.CSS — Interactive Synth GUI Components
+   Resistor Technology · resistor.technology
+   ============================================================ */
+
+/* --- Hero Panel Container --- */
+.synth-panel {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Brushed aluminum background */
+.synth-panel__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.01) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, #18181e 0%, #10101a 50%, #0c0c14 100%);
+  z-index: 0;
+}
+
+/* Panel border inset */
+.synth-panel__frame {
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(30, 30, 36, 0.8), rgba(20, 20, 26, 0.9));
+  backdrop-filter: blur(4px);
+  padding: var(--space-xl) var(--space-2xl);
+  max-width: 900px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* --- 7-Segment LED Display --- */
+.led-display {
+  background: #001a00;
+  border: 2px solid #003300;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  box-shadow:
+    inset 0 0 30px rgba(0, 255, 0, 0.08),
+    0 0 20px rgba(0, 255, 0, 0.03);
+}
+
+.led-display--amber {
+  background: #1a1200;
+  border-color: #332200;
+  box-shadow:
+    inset 0 0 30px rgba(255, 170, 0, 0.08),
+    0 0 20px rgba(255, 170, 0, 0.03);
+}
+
+.led-display__text {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00ff00;
+  text-shadow:
+    0 0 10px rgba(0, 255, 0, 0.8),
+    0 0 20px rgba(0, 255, 0, 0.4),
+    0 0 40px rgba(0, 255, 0, 0.15);
+}
+
+.led-display--amber .led-display__text {
+  color: #ffaa00;
+  text-shadow:
+    0 0 10px rgba(255, 170, 0, 0.8),
+    0 0 20px rgba(255, 170, 0, 0.4),
+    0 0 40px rgba(255, 170, 0, 0.15);
+}
+
+/* --- Panel Labels --- */
+.panel-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--color-text-muted);
+  text-align: center;
+  user-select: none;
+}
+
+.panel-subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* --- Controls Row --- */
+.controls-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+/* --- Rotary Knob --- */
+.knob-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.knob-wrap:active {
+  cursor: grabbing;
+}
+
+.knob {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(from 200deg, #1a1a1a, #3a3a3a 90deg, #2a2a2a 180deg, #3a3a3a 270deg, #1a1a1a);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111;
+  transition: box-shadow var(--duration-fast);
+}
+
+.knob:hover {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111,
+    0 0 12px rgba(196, 166, 122, calc(0.2 * var(--glow-intensity)));
+}
+
+/* Knob hub */
+.knob::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #444, #222);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Knob pointer indicator */
+.knob::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 12px;
+  background: #e8e0d0;
+  border-radius: 1px;
+}
+
+/* --- Scale Marks Around Knob --- */
+.knob-scale {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.knob-scale__mark {
+  position: absolute;
+  width: 1px;
+  height: 6px;
+  background: var(--color-text-muted);
+  top: 0;
+  left: 50%;
+  transform-origin: 0.5px 36px;
+}
+
+/* --- Vertical Fader --- */
+.fader-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  touch-action: none;
+  user-select: none;
+}
+
+.fader {
+  position: relative;
+  width: 40px;
+  height: 140px;
+  cursor: grab;
+}
+
+.fader:active {
+  cursor: grabbing;
+}
+
+/* Fader track (groove) */
+.fader__track {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #555, #333);
+  border-radius: 2px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Fader cap (slider) */
+.fader__cap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 18px;
+  top: 50%;
+  background: linear-gradient(to bottom, #d0d0d0, #a0a0a0 30%, #808080 70%, #a0a0a0);
+  border-radius: 2px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  transition: top 0.1s ease;
+}
+
+/* Center line on fader cap */
+.fader__cap::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  right: 4px;
+  height: 1px;
+  background: #444;
+  transform: translateY(-50%);
+}
+
+/* --- VU Meter --- */
+.vu-meter {
+  width: 200px;
+  height: 110px;
+  background: linear-gradient(to bottom, #2a2018, #1a1408);
+  border: 2px solid #5a4a20;
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(200, 160, 60, 0.1);
+}
+
+/* VU meter face text */
+.vu-meter__face {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: rgba(200, 160, 60, 0.6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* VU scale arc (simplified with gradient border) */
+.vu-meter__scale {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  right: 20px;
+  height: 50px;
+  border-top: 1px solid rgba(200, 160, 60, 0.3);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* Scale markings */
+.vu-meter__marks {
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 6px;
+  color: rgba(200, 160, 60, 0.5);
+}
+
+/* VU needle */
+.vu-meter__needle {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  width: 1px;
+  height: 65px;
+  background: linear-gradient(to top, rgba(200, 160, 60, 0.9), rgba(200, 160, 60, 0.3));
+  transform-origin: bottom center;
+  transform: rotate(var(--vu-angle, -30deg));
+  transition: transform 0.3s var(--ease-out);
+  box-shadow: 0 0 4px rgba(200, 160, 60, 0.3);
+}
+
+/* Needle pivot */
+.vu-meter__needle::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #8a7a40;
+  border-radius: 50%;
+}
+
+/* --- LED Indicators Row --- */
+.led-row {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #222, #111 50%, #000);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.1);
+  transition: all var(--duration-med);
+}
+
+.led.is-active {
+  background: radial-gradient(circle at 35% 35%, #40ff40, #00cc00 50%, #006600);
+  box-shadow:
+    0 0 8px rgba(0, 255, 0, calc(0.8 * var(--glow-intensity))),
+    0 0 16px rgba(0, 255, 0, calc(0.4 * var(--glow-intensity))),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.5),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.led.is-active--amber {
+  background: radial-gradient(circle at 35% 35%, #ffcc00, #dd8800 50%, #884400);
+  box-shadow:
+    0 0 8px rgba(255, 170, 0, calc(0.8 * var(--glow-intensity))),
+    0 0 16px rgba(255, 170, 0, calc(0.4 * var(--glow-intensity))),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.5),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+/* LED labels */
+.led-label {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.led-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* --- Patch Jack --- */
+.patch-jack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+}
+
+.patch-jack__barrel {
+  width: 20px;
+  height: 24px;
+  background: linear-gradient(to right, #444, #666 30%, #555 70%, #333);
+  border-radius: 2px;
+  border: 1px solid #222;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  position: relative;
+  transition: box-shadow var(--duration-med);
+}
+
+/* Jack opening */
+.patch-jack__barrel::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 8px;
+  background: #000;
+  border-radius: 1px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.patch-jack:hover .patch-jack__barrel {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15),
+    0 0 8px rgba(196, 166, 122, calc(0.4 * var(--glow-intensity)));
+}
+
+/* Jack sleeve */
+.patch-jack__sleeve {
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(to bottom, #888, #666);
+  border-radius: 1px;
+}
+
+/* --- Knob ARIA enhancements --- */
+.knob-wrap[role="slider"] {
+  outline: none;
+}
+
+.knob-wrap[role="slider"]:focus-visible .knob {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 3px var(--color-brass);
+}
+
+.fader-wrap[role="slider"]:focus-visible .fader__cap {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 0 0 3px var(--color-brass);
+}

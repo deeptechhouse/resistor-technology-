@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resistor Technology — Tools for Underground Music Culture</title>
+  <meta name="description" content="Resistor Technology builds tools for underground music culture. raiveFlier: AI rave flier research. Resistor: self-booking tour platform for musicians.">
+  <meta name="theme-color" content="#0a0a0c">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Resistor Technology">
+  <meta property="og:description" content="Tools for Underground Music Culture">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://resistor.technology">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/synth-elements.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- Skip to Content (A11y) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Film Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true">
+    <svg>
+      <filter id="grain">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grain)"/>
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav__logo">Resistor</a>
+
+    <div class="nav__links">
+      <a href="#raiveflier" class="nav__link link-animated">raiveFlier</a>
+      <a href="#resistor" class="nav__link link-animated">Resistor</a>
+      <a href="#technology" class="nav__link link-animated">Technology</a>
+      <a href="#contact" class="nav__link link-animated">Contact</a>
+    </div>
+
+    <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="nav__mobile-overlay" aria-hidden="true">
+    <a href="#raiveflier" class="nav__mobile-link">raiveFlier</a>
+    <a href="#resistor" class="nav__mobile-link">Resistor</a>
+    <a href="#technology" class="nav__mobile-link">Technology</a>
+    <a href="#contact" class="nav__mobile-link">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main id="main">
+
+    <!-- ============================================================
+         HERO — Interactive Synth Panel
+         ============================================================ -->
+    <section id="hero" class="hero" aria-label="Hero">
+      <div class="synth-panel">
+        <div class="synth-panel__bg" aria-hidden="true"></div>
+
+        <div class="synth-panel__frame">
+
+          <!-- LED Display Title -->
+          <div class="led-display led-display--amber">
+            <span class="led-display__text">Resistor Technology</span>
+          </div>
+
+          <!-- Subtitle -->
+          <p class="panel-subtitle">Tools for Underground Music Culture</p>
+
+          <!-- Interactive Controls Row -->
+          <div class="controls-row">
+
+            <!-- Knob: GRAIN -->
+            <div class="knob-wrap"
+                 role="slider"
+                 aria-label="Grain intensity control"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="40"
+                 tabindex="0"
+                 data-control="grain">
+              <div class="knob" style="transform: rotate(-100deg);"></div>
+              <span class="panel-label">Grain</span>
+            </div>
+
+            <!-- VU Meter -->
+            <div class="vu-meter" aria-label="Scroll velocity meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <span class="vu-meter__face">VU</span>
+              <div class="vu-meter__scale" aria-hidden="true"></div>
+              <div class="vu-meter__marks" aria-hidden="true">
+                <span>-20</span>
+                <span>-10</span>
+                <span>-7</span>
+                <span>-3</span>
+                <span>0</span>
+                <span>+3</span>
+              </div>
+              <div class="vu-meter__needle"></div>
+            </div>
+
+            <!-- Fader: DEPTH -->
+            <div class="fader-wrap"
+                 role="slider"
+                 aria-label="Parallax depth control"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="50"
+                 tabindex="0"
+                 data-control="depth">
+              <div class="fader">
+                <div class="fader__track"></div>
+                <div class="fader__cap"></div>
+              </div>
+              <span class="panel-label">Depth</span>
+            </div>
+
+            <!-- Knob: GLOW -->
+            <div class="knob-wrap"
+                 role="slider"
+                 aria-label="Glow intensity control"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="50"
+                 tabindex="0"
+                 data-control="glow">
+              <div class="knob" style="transform: rotate(-60deg);"></div>
+              <span class="panel-label">Glow</span>
+            </div>
+
+          </div>
+
+          <!-- LED Section Indicators -->
+          <div class="led-row" aria-label="Section progress indicators">
+            <div class="led-group">
+              <div class="led is-active--amber" data-section="hero"></div>
+              <span class="led-label">Home</span>
+            </div>
+            <div class="led-group">
+              <div class="led" data-section="raiveflier"></div>
+              <span class="led-label">Rvfl</span>
+            </div>
+            <div class="led-group">
+              <div class="led" data-section="resistor"></div>
+              <span class="led-label">Rstr</span>
+            </div>
+            <div class="led-group">
+              <div class="led" data-section="technology"></div>
+              <span class="led-label">Tech</span>
+            </div>
+            <div class="led-group">
+              <div class="led" data-section="contact"></div>
+              <span class="led-label">Out</span>
+            </div>
+          </div>
+
+          <!-- Patch Jack: OUTPUT -->
+          <div class="patch-jack" role="button" aria-label="Jump to contact section" tabindex="0" data-target="contact">
+            <div class="patch-jack__barrel"></div>
+            <div class="patch-jack__sleeve"></div>
+            <span class="panel-label">Output</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         RAIVEFLIER — Product Section
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="raiveflier" class="section section--raiveflier accent-amethyst" aria-label="raiveFlier product">
+      <div class="section__inner">
+        <div class="editorial">
+
+          <!-- Sticky Mockup -->
+          <div class="editorial__sticky">
+            <div class="mockup mockup--raiveflier mockup--scanlines reveal">
+              <div class="mockup__inner">
+                <span class="mockup__title">raiveFlier</span>
+                <span>AI-Powered Flier Research Interface</span>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <span class="badge">Upload</span>
+                  <span class="badge">Analyze</span>
+                  <span class="badge">Research</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="editorial__content">
+            <div class="section-header reveal">
+              <span class="section-header__label">Product</span>
+              <h2 class="section-header__title">raiveFlier</h2>
+              <p class="section-header__tagline">"Upload a rave flier. Get the full story."</p>
+            </div>
+
+            <div class="feature-grid">
+              <div class="card reveal reveal--delay-1">
+                <span class="card__icon" aria-hidden="true">&#x1F50D;</span>
+                <h3 class="card__title">AI-Powered OCR</h3>
+                <p class="card__description">Multi-engine text extraction from stylized flier art. LLM vision, EasyOCR, and Tesseract in a fallback chain.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-2">
+                <span class="card__icon" aria-hidden="true">&#x1F4DA;</span>
+                <h3 class="card__title">Deep Research</h3>
+                <p class="card__description">Cross-references Discogs, MusicBrainz, web archives, and a RAG knowledge base for comprehensive artist profiles.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-3">
+                <span class="card__icon" aria-hidden="true">&#x1F4CE;</span>
+                <h3 class="card__title">Citation-Backed</h3>
+                <p class="card__description">Every fact traced to books, interviews, and databases. Verifiable research you can trust.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-4">
+                <span class="card__icon" aria-hidden="true">&#x1F517;</span>
+                <h3 class="card__title">Interconnection Mapping</h3>
+                <p class="card__description">Reveals hidden relationships between artists, venues, labels, and scenes across decades of music history.</p>
+              </div>
+            </div>
+
+            <div class="tech-badges reveal">
+              <span class="badge">Python</span>
+              <span class="badge">FastAPI</span>
+              <span class="badge">ChromaDB</span>
+              <span class="badge">WebSocket</span>
+              <span class="badge">LLM Vision</span>
+            </div>
+
+            <div class="cta-row reveal">
+              <a href="https://raiveflier.onrender.com" class="btn btn--amethyst" target="_blank" rel="noopener noreferrer">
+                Try raiveFlier
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+              <a href="https://github.com/deeptechhouse/raiveFlier" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         RESISTOR — Product Section
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="resistor" class="section section--resistor accent-brass" aria-label="Resistor product">
+      <div class="section__inner">
+        <div class="editorial editorial--reversed">
+
+          <!-- Sticky Mockup -->
+          <div class="editorial__sticky">
+            <div class="mockup mockup--resistor mockup--scanlines reveal">
+              <div class="mockup__inner">
+                <span class="mockup__title">Resistor</span>
+                <span>Self-Booking Tour Platform</span>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <span class="badge">Book</span>
+                  <span class="badge">Tour</span>
+                  <span class="badge">Perform</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="editorial__content">
+            <div class="section-header reveal">
+              <span class="section-header__label">Product</span>
+              <h2 class="section-header__title">Resistor</h2>
+              <p class="section-header__tagline">"Reclaim Your Booking. Own Your Tour."</p>
+            </div>
+
+            <div class="feature-grid">
+              <div class="card reveal reveal--delay-1">
+                <span class="card__icon" aria-hidden="true">&#x1F91D;</span>
+                <h3 class="card__title">Direct Booking</h3>
+                <p class="card__description">Artists connect directly with promoters, zero agent fees. Take full control of your performance calendar.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-2">
+                <span class="card__icon" aria-hidden="true">&#x1F5FA;</span>
+                <h3 class="card__title">Interactive Map</h3>
+                <p class="card__description">Plan global tours visually with city-by-city itineraries. See venue availability and routing at a glance.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-3">
+                <span class="card__icon" aria-hidden="true">&#x1F512;</span>
+                <h3 class="card__title">Escrow Payments</h3>
+                <p class="card__description">Platform-backed payment protection for both parties. Funds held securely until performance is confirmed.</p>
+              </div>
+
+              <div class="card reveal reveal--delay-4">
+                <span class="card__icon" aria-hidden="true">&#x1F4B0;</span>
+                <h3 class="card__title">Auction Pricing</h3>
+                <p class="card__description">Promoters compete with offers above artist minimums. Fair market pricing driven by demand.</p>
+              </div>
+            </div>
+
+            <div class="tech-badges reveal">
+              <span class="badge">Next.js</span>
+              <span class="badge">TypeScript</span>
+              <span class="badge">PostgreSQL</span>
+              <span class="badge">PayPal Commerce</span>
+              <span class="badge">Google Maps</span>
+            </div>
+
+            <div class="stats reveal">
+              <div class="stat">
+                <div class="stat__value">250+</div>
+                <div class="stat__label">Cities</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">3</div>
+                <div class="stat__label">Continents</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">Live</div>
+                <div class="stat__label">Negotiation</div>
+              </div>
+            </div>
+
+            <div class="cta-row reveal">
+              <a href="https://resistor.world" class="btn btn--brass" target="_blank" rel="noopener noreferrer">
+                Explore Resistor
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TECHNOLOGY — About Section
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="technology" class="section section--technology accent-teal" aria-label="Technology and philosophy">
+      <div class="section__inner">
+
+        <div class="section-header reveal" style="text-align: center; max-width: 600px; margin: 0 auto var(--space-xl);">
+          <span class="section-header__label">Philosophy</span>
+          <h2 class="section-header__title">Technology</h2>
+        </div>
+
+        <div class="tech-bento">
+
+          <div class="card reveal reveal--delay-1">
+            <h3 class="card__title">Architecture Philosophy</h3>
+            <p class="card__description">Object-oriented, modular design with adapter patterns throughout. Every external service is abstracted behind an interface — no vendor lock-in, ever. Components can be updated, swapped, or extended independently.</p>
+          </div>
+
+          <div class="card reveal reveal--delay-2">
+            <h3 class="card__title">Open Source</h3>
+            <p class="card__description">MIT licensed tools built in the open. Community-driven development with transparent roadmaps.</p>
+          </div>
+
+          <div class="card reveal reveal--delay-3">
+            <h3 class="card__title">Music-First</h3>
+            <p class="card__description">Built by musicians, for musicians and music culture. Every feature informed by real needs from the underground.</p>
+          </div>
+
+          <div class="card reveal reveal--delay-1">
+            <h3 class="card__title">Python</h3>
+            <p class="card__description">FastAPI backends, ML pipelines, data processing. The backbone of raiveFlier's research engine.</p>
+          </div>
+
+          <div class="card reveal reveal--delay-2">
+            <h3 class="card__title">Stack Overview</h3>
+            <p class="card__description">TypeScript and Next.js for interactive frontends. PostgreSQL and ChromaDB for structured and vector data. WebSocket for real-time updates. PayPal Commerce for secure payments.</p>
+          </div>
+
+          <div class="card reveal reveal--delay-3">
+            <h3 class="card__title">Security</h3>
+            <p class="card__description">OWASP Top-10 scanning, dependency auditing, secret detection, and TLS enforcement across all services.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="contact" class="contact" aria-label="Contact information">
+      <div class="section__inner" style="max-width: 600px; margin: 0 auto;">
+
+        <h2 class="contact__heading reveal">Get in Touch</h2>
+
+        <a href="mailto:andy@resistor.technology" class="contact__email reveal">
+          andy@resistor.technology
+        </a>
+
+        <!-- Decorative Patch Jack (callback to hero) -->
+        <div class="contact__jack reveal" aria-hidden="true">
+          <div class="patch-jack" style="cursor: default;">
+            <div class="patch-jack__barrel"></div>
+            <div class="patch-jack__sleeve"></div>
+            <span class="panel-label">Connected</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <nav class="footer__links" aria-label="Footer navigation">
+        <a href="#raiveflier" class="footer__link">raiveFlier</a>
+        <a href="#resistor" class="footer__link">Resistor</a>
+        <a href="https://github.com/deeptechhouse" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#contact" class="footer__link">Contact</a>
+      </nav>
+      <p class="footer__copy">&copy; 2026 Resistor Technology</p>
+      <p class="footer__license">Site released under the MIT License</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/synth-hero.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
