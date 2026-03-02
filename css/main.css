@@ -127,7 +127,7 @@
   color: var(--color-brass);
 }
 
-/* --- Hero Section --- */
+/* --- Hero Section (Simplified — title only) --- */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -135,6 +135,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-3xl) var(--space-lg);
+  padding-bottom: calc(var(--space-3xl) + 80px);
   overflow: hidden;
 }
 
@@ -267,14 +268,11 @@
   transform: scaleX(1);
 }
 
-.contact__jack {
-  margin: var(--space-xl) auto 0;
-}
-
 /* --- Footer --- */
 .footer {
   border-top: 1px solid var(--color-border);
   padding: var(--space-lg);
+  padding-bottom: calc(var(--space-lg) + 80px);
   text-align: center;
 }
 
@@ -380,23 +378,26 @@
     display: flex;
   }
 
-  .synth-panel__frame {
-    padding: var(--space-lg) var(--space-md);
+  /* Dock: tighten spacing on mobile */
+  .synth-dock {
+    gap: var(--space-md);
+    padding: 0 var(--space-sm);
+    height: 64px;
   }
 
-  .controls-row {
-    gap: var(--space-lg);
-    flex-wrap: wrap;
-    justify-content: center;
+  .synth-dock__switches {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dock-switch {
+    padding: 4px 8px;
+    font-size: 7px;
   }
 
   .vu-meter {
-    width: 160px;
-    height: 90px;
-  }
-
-  .fader {
-    height: 100px;
+    width: 80px;
+    height: 48px;
   }
 
   .tech-bento {
@@ -431,23 +432,14 @@
     --space-2xl: 2rem;
   }
 
-  .synth-panel__frame {
-    padding: var(--space-md);
-    gap: var(--space-md);
-  }
-
-  .controls-row {
-    gap: var(--space-md);
-  }
-
-  .knob {
-    width: 40px;
-    height: 40px;
-  }
-
+  /* Dock: hide VU meter on very small screens */
   .vu-meter {
-    width: 140px;
-    height: 80px;
+    display: none;
+  }
+
+  .synth-dock__knob {
+    width: 30px;
+    height: 30px;
   }
 
   .led-display__text {

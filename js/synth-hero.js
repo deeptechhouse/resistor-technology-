@@ -1,16 +1,15 @@
 /**
- * synth-hero.js — Interactive Synth Panel Controls
+ * synth-hero.js — Synth Dock Controls
  * Resistor Technology · resistor.technology
  *
- * Handles: rotary knobs, vertical fader, VU meter, patch jack
+ * Handles: rotary knobs (dock), VU meter needle, product switches
  * All controls map to CSS custom properties on :root
  */
 
 (function () {
   'use strict';
 
-  // Bail if reduced motion is preferred
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // --- Utility: Clamp value between min and max ---
   function clamp(val, min, max) {
@@ -23,20 +22,20 @@
   }
 
   // ============================================================
-  // ROTARY KNOBS
+  // ROTARY KNOBS (in dock)
   // ============================================================
 
-  const knobs = document.querySelectorAll('.knob-wrap[data-control]');
+  var knobs = document.querySelectorAll('.synth-dock .knob-wrap[data-control]');
 
   knobs.forEach(function (wrap) {
-    const knobEl = wrap.querySelector('.knob');
-    const control = wrap.dataset.control;
+    var knobEl = wrap.querySelector('.knob');
+    var control = wrap.dataset.control;
 
     // State: angle in degrees (-140 to +140, 0 = noon)
-    let angle = control === 'grain' ? -100 : -60;
-    let isDragging = false;
-    let startY = 0;
-    let startAngle = 0;
+    var angle = control === 'grain' ? -100 : -60;
+    var isDragging = false;
+    var startY = 0;
+    var startAngle = 0;
 
     function updateKnob() {
       knobEl.style.transform = 'rotate(' + angle + 'deg)';
@@ -45,11 +44,9 @@
       var normalized = mapRange(angle, -140, 140, 0, 1);
 
       if (control === 'grain') {
-        // Grain: 0.00 to 0.10
         document.documentElement.style.setProperty('--grain-opacity', (normalized * 0.10).toFixed(3));
         wrap.setAttribute('aria-valuenow', Math.round(normalized * 100));
       } else if (control === 'glow') {
-        // Glow: 0.0 to 1.0
         document.documentElement.style.setProperty('--glow-intensity', normalized.toFixed(2));
         wrap.setAttribute('aria-valuenow', Math.round(normalized * 100));
       }
@@ -76,12 +73,10 @@
       wrap.classList.remove('is-active');
     }
 
-    // Mouse events
     wrap.addEventListener('mousedown', onPointerDown);
     document.addEventListener('mousemove', onPointerMove);
     document.addEventListener('mouseup', onPointerUp);
 
-    // Touch events
     wrap.addEventListener('touchstart', onPointerDown, { passive: false });
     document.addEventListener('touchmove', onPointerMove, { passive: false });
     document.addEventListener('touchend', onPointerUp);
@@ -100,112 +95,43 @@
       }
     });
 
-    // Initialize
     updateKnob();
   });
 
   // ============================================================
-  // VERTICAL FADER
-  // ============================================================
-
-  var faderWrap = document.querySelector('.fader-wrap[data-control="depth"]');
-  if (faderWrap) {
-    var fader = faderWrap.querySelector('.fader');
-    var cap = faderWrap.querySelector('.fader__cap');
-    var faderHeight = 140;
-    var capHeight = 18;
-    var maxTravel = faderHeight - capHeight;
-
-    // Position as fraction 0 (top) to 1 (bottom)
-    var faderPos = 0.5;
-    var isDraggingFader = false;
-    var faderStartY = 0;
-    var faderStartPos = 0;
-
-    function updateFader() {
-      var topPx = faderPos * maxTravel;
-      cap.style.top = topPx + 'px';
-
-      // Map position: top=1 (max depth), bottom=0 (no depth)
-      var depth = 1 - faderPos;
-      document.documentElement.style.setProperty('--parallax-depth', depth.toFixed(2));
-      faderWrap.setAttribute('aria-valuenow', Math.round(depth * 100));
-    }
-
-    function onFaderDown(e) {
-      isDraggingFader = true;
-      faderStartY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-      faderStartPos = faderPos;
-      faderWrap.classList.add('is-active');
-      e.preventDefault();
-    }
-
-    function onFaderMove(e) {
-      if (!isDraggingFader) return;
-      var clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-      var delta = clientY - faderStartY;
-      faderPos = clamp(faderStartPos + delta / maxTravel, 0, 1);
-      updateFader();
-    }
-
-    function onFaderUp() {
-      isDraggingFader = false;
-      faderWrap.classList.remove('is-active');
-    }
-
-    fader.addEventListener('mousedown', onFaderDown);
-    document.addEventListener('mousemove', onFaderMove);
-    document.addEventListener('mouseup', onFaderUp);
-
-    fader.addEventListener('touchstart', onFaderDown, { passive: false });
-    document.addEventListener('touchmove', onFaderMove, { passive: false });
-    document.addEventListener('touchend', onFaderUp);
-
-    // Keyboard
-    faderWrap.addEventListener('keydown', function (e) {
-      var step = 0.05;
-      if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
-        faderPos = clamp(faderPos - step, 0, 1);
-        updateFader();
-        e.preventDefault();
-      } else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
-        faderPos = clamp(faderPos + step, 0, 1);
-        updateFader();
-        e.preventDefault();
-      }
-    });
-
-    updateFader();
-  }
-
-  // ============================================================
-  // VU METER — Scroll Velocity Driven
+  // VU METER — Scroll Velocity Needle
   // ============================================================
 
   var needle = document.querySelector('.vu-meter__needle');
+  var vuMeter = document.querySelector('.vu-meter');
+
   if (needle && !prefersReducedMotion) {
     var lastScrollY = window.scrollY;
     var lastTime = performance.now();
     var vuAngle = -30; // resting position
     var targetAngle = -30;
-    var animFrameId = null;
 
     function updateVU() {
       // Smooth interpolation toward target
       vuAngle += (targetAngle - vuAngle) * 0.12;
-      needle.style.setProperty('--vu-angle', vuAngle.toFixed(1) + 'deg');
       needle.style.transform = 'rotate(' + vuAngle.toFixed(1) + 'deg)';
+
+      // Update ARIA
+      if (vuMeter) {
+        var pct = clamp(mapRange(vuAngle, -30, 20, 0, 100), 0, 100);
+        vuMeter.setAttribute('aria-valuenow', Math.round(pct));
+      }
 
       // Decay target back to rest
       targetAngle += (-30 - targetAngle) * 0.05;
 
-      animFrameId = requestAnimationFrame(updateVU);
+      requestAnimationFrame(updateVU);
     }
 
     window.addEventListener('scroll', function () {
       var now = performance.now();
       var dt = now - lastTime;
-      if (dt < 10) return; // throttle
+      if (dt < 10) return;
 
       var dy = Math.abs(window.scrollY - lastScrollY);
       var velocity = dy / dt; // px per ms
@@ -217,29 +143,58 @@
       lastTime = now;
     }, { passive: true });
 
-    animFrameId = requestAnimationFrame(updateVU);
+    requestAnimationFrame(updateVU);
   }
 
   // ============================================================
-  // PATCH JACK — Scroll to Contact
+  // PRODUCT SWITCHES — Scroll to section + active state
   // ============================================================
 
-  var patchJack = document.querySelector('.patch-jack[data-target]');
-  if (patchJack) {
-    function activateJack() {
-      var targetId = patchJack.dataset.target;
+  var dockSwitches = document.querySelectorAll('.dock-switch[data-target]');
+  var navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 64;
+
+  dockSwitches.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var targetId = btn.dataset.target;
       var targetEl = document.getElementById(targetId);
       if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
+        var top = targetEl.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top: top, behavior: 'smooth' });
       }
-    }
+    });
+  });
 
-    patchJack.addEventListener('click', activateJack);
-    patchJack.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        activateJack();
-        e.preventDefault();
-      }
+  // Observe product sections to update active switch state
+  var switchSections = [];
+  dockSwitches.forEach(function (btn) {
+    var sectionId = btn.dataset.target;
+    var sectionEl = document.getElementById(sectionId);
+    if (sectionEl) {
+      switchSections.push({ btn: btn, section: sectionEl });
+    }
+  });
+
+  if (switchSections.length > 0) {
+    var switchObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var match = switchSections.find(function (s) {
+            return s.section === entry.target;
+          });
+          if (!match) return;
+
+          if (entry.isIntersecting) {
+            match.btn.classList.add('is-active');
+          } else {
+            match.btn.classList.remove('is-active');
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    switchSections.forEach(function (s) {
+      switchObserver.observe(s.section);
     });
   }
 

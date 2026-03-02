@@ -1,5 +1,5 @@
 /**
- * scroll-animations.js — Scroll-Driven Reveals & Section LED Indicators
+ * scroll-animations.js — Scroll-Driven Reveals & Parallax
  * Resistor Technology · resistor.technology
  *
  * Uses IntersectionObserver for performant scroll-triggered animations.
@@ -41,54 +41,6 @@
 
     revealElements.forEach(function (el) {
       revealObserver.observe(el);
-    });
-  }
-
-  // ============================================================
-  // SECTION LED INDICATORS — Light up LEDs based on visible section
-  // ============================================================
-
-  var leds = document.querySelectorAll('.led[data-section]');
-  var sections = [];
-
-  leds.forEach(function (led) {
-    var sectionId = led.dataset.section;
-    var sectionEl = document.getElementById(sectionId);
-    if (sectionEl) {
-      sections.push({ led: led, section: sectionEl, id: sectionId });
-    }
-  });
-
-  if (sections.length > 0) {
-    var sectionObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          // Find the corresponding LED
-          var match = sections.find(function (s) {
-            return s.section === entry.target;
-          });
-          if (!match) return;
-
-          if (entry.isIntersecting) {
-            // Activate this LED
-            match.led.classList.add('is-active');
-            // Use amber for hero, green for others
-            if (match.id === 'hero') {
-              match.led.classList.add('is-active--amber');
-            }
-          } else {
-            match.led.classList.remove('is-active');
-            match.led.classList.remove('is-active--amber');
-          }
-        });
-      },
-      {
-        threshold: 0.3
-      }
-    );
-
-    sections.forEach(function (s) {
-      sectionObserver.observe(s.section);
     });
   }
 

@@ -72,113 +72,23 @@
          HERO — Interactive Synth Panel
          ============================================================ -->
     <section id="hero" class="hero" aria-label="Hero">
-      <div class="synth-panel">
-        <div class="synth-panel__bg" aria-hidden="true"></div>
+      <div class="hero__inner">
 
-        <div class="synth-panel__frame">
-
-          <!-- LED Display Title -->
-          <div class="led-display led-display--amber">
-            <span class="led-display__text">Resistor Technology</span>
-          </div>
-
-          <!-- Subtitle -->
-          <p class="panel-subtitle">Tools for Underground Music Culture</p>
-
-          <!-- Interactive Controls Row -->
-          <div class="controls-row">
-
-            <!-- Knob: GRAIN -->
-            <div class="knob-wrap"
-                 role="slider"
-                 aria-label="Grain intensity control"
-                 aria-valuemin="0"
-                 aria-valuemax="100"
-                 aria-valuenow="40"
-                 tabindex="0"
-                 data-control="grain">
-              <div class="knob" style="transform: rotate(-100deg);"></div>
-              <span class="panel-label">Grain</span>
-            </div>
-
-            <!-- VU Meter -->
-            <div class="vu-meter" aria-label="Scroll velocity meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-              <span class="vu-meter__face">VU</span>
-              <div class="vu-meter__scale" aria-hidden="true"></div>
-              <div class="vu-meter__marks" aria-hidden="true">
-                <span>-20</span>
-                <span>-10</span>
-                <span>-7</span>
-                <span>-3</span>
-                <span>0</span>
-                <span>+3</span>
-              </div>
-              <div class="vu-meter__needle"></div>
-            </div>
-
-            <!-- Fader: DEPTH -->
-            <div class="fader-wrap"
-                 role="slider"
-                 aria-label="Parallax depth control"
-                 aria-valuemin="0"
-                 aria-valuemax="100"
-                 aria-valuenow="50"
-                 tabindex="0"
-                 data-control="depth">
-              <div class="fader">
-                <div class="fader__track"></div>
-                <div class="fader__cap"></div>
-              </div>
-              <span class="panel-label">Depth</span>
-            </div>
-
-            <!-- Knob: GLOW -->
-            <div class="knob-wrap"
-                 role="slider"
-                 aria-label="Glow intensity control"
-                 aria-valuemin="0"
-                 aria-valuemax="100"
-                 aria-valuenow="50"
-                 tabindex="0"
-                 data-control="glow">
-              <div class="knob" style="transform: rotate(-60deg);"></div>
-              <span class="panel-label">Glow</span>
-            </div>
-
-          </div>
-
-          <!-- LED Section Indicators -->
-          <div class="led-row" aria-label="Section progress indicators">
-            <div class="led-group">
-              <div class="led is-active--amber" data-section="hero"></div>
-              <span class="led-label">Home</span>
-            </div>
-            <div class="led-group">
-              <div class="led" data-section="raiveflier"></div>
-              <span class="led-label">Rvfl</span>
-            </div>
-            <div class="led-group">
-              <div class="led" data-section="resistor"></div>
-              <span class="led-label">Rstr</span>
-            </div>
-            <div class="led-group">
-              <div class="led" data-section="technology"></div>
-              <span class="led-label">Tech</span>
-            </div>
-            <div class="led-group">
-              <div class="led" data-section="contact"></div>
-              <span class="led-label">Out</span>
-            </div>
-          </div>
-
-          <!-- Patch Jack: OUTPUT -->
-          <div class="patch-jack" role="button" aria-label="Jump to contact section" tabindex="0" data-target="contact">
-            <div class="patch-jack__barrel"></div>
-            <div class="patch-jack__sleeve"></div>
-            <span class="panel-label">Output</span>
-          </div>
-
+        <!-- LED Display Title -->
+        <div class="led-display led-display--amber">
+          <span class="led-display__text">Resistor Technology</span>
         </div>
+
+        <!-- Subtitle -->
+        <p class="panel-subtitle">Tools for Underground Music Culture</p>
+
+        <!-- Scroll Indicator -->
+        <div class="hero__scroll-hint" aria-hidden="true">
+          <svg class="hero__chevron" width="24" height="14" viewBox="0 0 24 14" fill="none">
+            <path d="M2 2L12 12L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
       </div>
     </section>
 
@@ -419,15 +329,6 @@
           andy@resistor.technology
         </a>
 
-        <!-- Decorative Patch Jack (callback to hero) -->
-        <div class="contact__jack reveal" aria-hidden="true">
-          <div class="patch-jack" style="cursor: default;">
-            <div class="patch-jack__barrel"></div>
-            <div class="patch-jack__sleeve"></div>
-            <span class="panel-label">Connected</span>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -448,6 +349,61 @@
       <p class="footer__license">Site released under the MIT License</p>
     </div>
   </footer>
+
+  <!-- ============================================================
+       SYNTH DOCK — Persistent Bottom Control Bar
+       ============================================================ -->
+  <div class="synth-dock" role="toolbar" aria-label="Synth controls">
+
+    <!-- GRAIN Knob -->
+    <div class="knob-wrap synth-dock__knob-wrap"
+         role="slider"
+         aria-label="Grain intensity control"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-valuenow="40"
+         tabindex="0"
+         data-control="grain">
+      <span class="panel-label">Grain</span>
+      <div class="knob synth-dock__knob" style="transform: rotate(-100deg);"></div>
+    </div>
+
+    <!-- Product Switches -->
+    <div class="synth-dock__switches">
+      <button class="dock-switch dock-switch--amethyst is-active" data-target="raiveflier" aria-label="Scroll to raiveFlier section">
+        <span class="dock-switch__led"></span>
+        <span class="dock-switch__label">raiveFlier</span>
+      </button>
+      <button class="dock-switch dock-switch--brass" data-target="resistor" aria-label="Scroll to Resistor section">
+        <span class="dock-switch__led"></span>
+        <span class="dock-switch__label">Resistor</span>
+      </button>
+    </div>
+
+    <!-- VU Meter -->
+    <div class="vu-meter" aria-label="Scroll velocity meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="vu-meter__face">VU</span>
+      <div class="vu-meter__scale" aria-hidden="true"></div>
+      <div class="vu-meter__marks" aria-hidden="true">
+        <span>-20</span><span>-10</span><span>-3</span><span>0</span><span>+3</span>
+      </div>
+      <div class="vu-meter__needle"></div>
+    </div>
+
+    <!-- GLOW Knob -->
+    <div class="knob-wrap synth-dock__knob-wrap"
+         role="slider"
+         aria-label="Glow intensity control"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-valuenow="50"
+         tabindex="0"
+         data-control="glow">
+      <span class="panel-label">Glow</span>
+      <div class="knob synth-dock__knob" style="transform: rotate(-60deg);"></div>
+    </div>
+
+  </div>
 
   <!-- Scripts -->
   <script src="js/synth-hero.js"></script>
