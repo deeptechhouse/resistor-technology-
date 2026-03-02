@@ -128,34 +128,57 @@
               <div class="card reveal reveal--delay-1">
                 <span class="card__icon" aria-hidden="true">&#x1F50D;</span>
                 <h3 class="card__title">AI-Powered OCR</h3>
-                <p class="card__description">Multi-engine text extraction from stylized flier art. LLM vision, EasyOCR, and Tesseract in a fallback chain.</p>
+                <p class="card__description">Multi-provider fallback chain — LLM Vision, EasyOCR, and Tesseract — handles the stylized, warped, neon-outlined typography found on rave fliers. Confidence scoring selects the best result automatically.</p>
               </div>
 
               <div class="card reveal reveal--delay-2">
                 <span class="card__icon" aria-hidden="true">&#x1F4DA;</span>
-                <h3 class="card__title">Deep Research</h3>
-                <p class="card__description">Cross-references Discogs, MusicBrainz, web archives, and a RAG knowledge base for comprehensive artist profiles.</p>
+                <h3 class="card__title">5 Parallel Researchers</h3>
+                <p class="card__description">Dedicated researchers for artists, venues, promoters, date context, and event names query Discogs, MusicBrainz, Bandcamp, Beatport, and a RAG knowledge base simultaneously via asyncio.</p>
               </div>
 
               <div class="card reveal reveal--delay-3">
                 <span class="card__icon" aria-hidden="true">&#x1F4CE;</span>
-                <h3 class="card__title">Citation-Backed</h3>
-                <p class="card__description">Every fact traced to books, interviews, and databases. Verifiable research you can trust.</p>
+                <h3 class="card__title">6-Tier Citation System</h3>
+                <p class="card__description">Every fact ranked from published books and academic articles down to forum posts. Higher-tier sources are weighted more heavily, giving you confidence in what you're reading.</p>
               </div>
 
               <div class="card reveal reveal--delay-4">
                 <span class="card__icon" aria-hidden="true">&#x1F517;</span>
                 <h3 class="card__title">Interconnection Mapping</h3>
-                <p class="card__description">Reveals hidden relationships between artists, venues, labels, and scenes across decades of music history.</p>
+                <p class="card__description">LLM-powered relationship analysis maps shared record labels, recurring venue bookings, genre lineages, and geographic connections across decades of electronic music history.</p>
               </div>
             </div>
 
             <div class="tech-badges reveal">
-              <span class="badge">Python</span>
+              <span class="badge">Python 3.12</span>
               <span class="badge">FastAPI</span>
+              <span class="badge">Pydantic v2</span>
               <span class="badge">ChromaDB</span>
               <span class="badge">WebSocket</span>
               <span class="badge">LLM Vision</span>
+              <span class="badge">RAG</span>
+              <span class="badge">Discogs</span>
+              <span class="badge">MusicBrainz</span>
+            </div>
+
+            <div class="stats reveal">
+              <div class="stat">
+                <div class="stat__value">30K+</div>
+                <div class="stat__label">Lines of Code</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">1,174</div>
+                <div class="stat__label">Tests</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">9</div>
+                <div class="stat__label">Interfaces</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">22</div>
+                <div class="stat__label">Adapters</div>
+              </div>
             </div>
 
             <div class="cta-row reveal">
@@ -209,25 +232,25 @@
               <div class="card reveal reveal--delay-1">
                 <span class="card__icon" aria-hidden="true">&#x1F91D;</span>
                 <h3 class="card__title">Direct Booking</h3>
-                <p class="card__description">Artists connect directly with promoters, zero agent fees. Take full control of your performance calendar.</p>
+                <p class="card__description">Self-service marketplace with zero commission on the base tier. Artists post city-by-city availability with minimum fees; promoters send structured booking offers and negotiate through multi-round counter-offers.</p>
               </div>
 
               <div class="card reveal reveal--delay-2">
                 <span class="card__icon" aria-hidden="true">&#x1F5FA;</span>
                 <h3 class="card__title">Interactive Map</h3>
-                <p class="card__description">Plan global tours visually with city-by-city itineraries. See venue availability and routing at a glance.</p>
+                <p class="card__description">Browse available artists on a map-driven discovery interface. Promoters find talent by city, date, and genre. Venues list availability and capacity — book talent and space in one platform.</p>
               </div>
 
               <div class="card reveal reveal--delay-3">
                 <span class="card__icon" aria-hidden="true">&#x1F512;</span>
                 <h3 class="card__title">Escrow Payments</h3>
-                <p class="card__description">Platform-backed payment protection for both parties. Funds held securely until performance is confirmed.</p>
+                <p class="card__description">PayPal escrow with scheduled disbursements — travel costs paid immediately, performance fees split pre/post event. Digital contracts with PDF export create a binding record.</p>
               </div>
 
               <div class="card reveal reveal--delay-4">
                 <span class="card__icon" aria-hidden="true">&#x1F4B0;</span>
                 <h3 class="card__title">Auction Pricing</h3>
-                <p class="card__description">Promoters compete with offers above artist minimums. Fair market pricing driven by demand.</p>
+                <p class="card__description">Promoters compete with offers above artist minimums through multi-round negotiation. Fair market pricing driven by real demand — not agency markups.</p>
               </div>
             </div>
 
@@ -235,22 +258,29 @@
               <span class="badge">Next.js</span>
               <span class="badge">TypeScript</span>
               <span class="badge">PostgreSQL</span>
+              <span class="badge">Prisma ORM</span>
               <span class="badge">PayPal Commerce</span>
+              <span class="badge">NextAuth</span>
+              <span class="badge">Zod</span>
               <span class="badge">Google Maps</span>
             </div>
 
             <div class="stats reveal">
               <div class="stat">
-                <div class="stat__value">250+</div>
-                <div class="stat__label">Cities</div>
+                <div class="stat__value">~140K</div>
+                <div class="stat__label">Lines of Code</div>
               </div>
               <div class="stat">
-                <div class="stat__value">3</div>
-                <div class="stat__label">Continents</div>
+                <div class="stat__value">111</div>
+                <div class="stat__label">API Routes</div>
               </div>
               <div class="stat">
-                <div class="stat__value">Live</div>
-                <div class="stat__label">Negotiation</div>
+                <div class="stat__value">29</div>
+                <div class="stat__label">DB Models</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">27</div>
+                <div class="stat__label">Services</div>
               </div>
             </div>
 
@@ -282,33 +312,33 @@
         <div class="tech-bento">
 
           <div class="card reveal reveal--delay-1">
-            <h3 class="card__title">Architecture Philosophy</h3>
-            <p class="card__description">Object-oriented, modular design with adapter patterns throughout. Every external service is abstracted behind an interface — no vendor lock-in, ever. Components can be updated, swapped, or extended independently.</p>
+            <h3 class="card__title">Layered Architecture</h3>
+            <p class="card__description">Enterprise layered design with dependency injection across both platforms. API routes, service layers, repository layers, and external adapters — all connected through typed interfaces. Swapping a provider means changing one line in the composition root.</p>
           </div>
 
           <div class="card reveal reveal--delay-2">
             <h3 class="card__title">Open Source</h3>
-            <p class="card__description">MIT licensed tools built in the open. Community-driven development with transparent roadmaps.</p>
+            <p class="card__description">MIT licensed tools built in the open. 300+ commits and 60+ merged PRs across both platforms. Community-driven development with transparent roadmaps.</p>
           </div>
 
           <div class="card reveal reveal--delay-3">
             <h3 class="card__title">Music-First</h3>
-            <p class="card__description">Built by musicians, for musicians and music culture. Every feature informed by real needs from the underground.</p>
+            <p class="card__description">Built by musicians, for musicians and music culture. Every feature informed by real needs from the underground electronic music scene — from booking logistics to flier archival.</p>
           </div>
 
           <div class="card reveal reveal--delay-1">
-            <h3 class="card__title">Python</h3>
-            <p class="card__description">FastAPI backends, ML pipelines, data processing. The backbone of raiveFlier's research engine.</p>
+            <h3 class="card__title">Adapter Pattern</h3>
+            <p class="card__description">9 abstract interfaces in raiveFlier, 22 repository interfaces in Resistor. LLMs, OCR engines, music databases, payment providers, vector stores — all accessed through contracts. No vendor lock-in, ever.</p>
           </div>
 
           <div class="card reveal reveal--delay-2">
-            <h3 class="card__title">Stack Overview</h3>
-            <p class="card__description">TypeScript and Next.js for interactive frontends. PostgreSQL and ChromaDB for structured and vector data. WebSocket for real-time updates. PayPal Commerce for secure payments.</p>
+            <h3 class="card__title">Dual Stack</h3>
+            <p class="card__description">Python 3.12 with FastAPI and Pydantic v2 for raiveFlier's research engine. TypeScript with Next.js and Prisma ORM for Resistor's booking marketplace. PostgreSQL, ChromaDB, WebSocket, and PayPal Commerce across the ecosystem.</p>
           </div>
 
           <div class="card reveal reveal--delay-3">
             <h3 class="card__title">Security</h3>
-            <p class="card__description">OWASP Top-10 scanning, dependency auditing, secret detection, and TLS enforcement across all services.</p>
+            <p class="card__description">OWASP Top-10 scanning, dependency auditing, secret detection, TLS enforcement. Zod validation on every API boundary, custom error hierarchies, and structured JSON logging across all services.</p>
           </div>
 
         </div>
