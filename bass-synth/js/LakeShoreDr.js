@@ -23,12 +23,40 @@ export class LakeShoreDr {
   #container;
   #theme;
 
+  /** @type {Function|null} Lazy AudioContext factory from TransportSync */
+  #getAudioContext;
+
+  /** @type {Function|null} Sync callback: fired after start */
+  #onStart;
+
+  /** @type {Function|null} Sync callback: fired after stop */
+  #onStop;
+
+  /** @type {Function|null} Sync callback: fired after BPM change */
+  #onBPMChange;
+
   static THEMES = ['bunker', 'vintage'];
 
+  /**
+   * @param {HTMLElement} container
+   * @param {object} [opts]
+   * @param {number} [opts.bpm=120]
+   * @param {string} [opts.theme='bunker']
+   * @param {Function} [opts.getAudioContext] — lazy factory returning shared AudioContext
+   * @param {Function} [opts.onStart] — sync callback fired after playback starts
+   * @param {Function} [opts.onStop] — sync callback fired after playback stops
+   * @param {Function} [opts.onBPMChange] — sync callback fired after BPM changes, receives new BPM
+   */
   constructor(container, opts = {}) {
     this.#container = container;
     this.#theme = opts.theme || 'bunker';
     const bpm = opts.bpm || 120;
+
+    // TransportSync callbacks (null when standalone)
+    this.#getAudioContext = opts.getAudioContext || null;
+    this.#onStart = opts.onStart || null;
+    this.#onStop = opts.onStop || null;
+    this.#onBPMChange = opts.onBPMChange || null;
 
     // Set theme attribute
     this.#container.classList.add('bass-synth');
@@ -113,10 +141,12 @@ export class LakeShoreDr {
   }
 
   start() {
-    this.#engine.init();
+    const ctx = this.#getAudioContext ? this.#getAudioContext() : undefined;
+    this.#engine.init(ctx);
     this.#synth.init();
     this.#sequencer.start();
     this.#ui.refreshTransport(true);
+    if (this.#onStart) this.#onStart();
   }
 
   stop() {
@@ -126,11 +156,13 @@ export class LakeShoreDr {
     this.#ui.setActiveLED(-1);
     // Reset VU
     if (this.#ui.vuMeter) this.#ui.vuMeter.reset();
+    if (this.#onStop) this.#onStop();
   }
 
   setBPM(value) {
     this.#sequencer.setBPM(value);
     this.#ui.refreshBPM(this.#sequencer.bpm);
+    if (this.#onBPMChange) this.#onBPMChange(this.#sequencer.bpm);
   }
 
   setTheme(theme) {

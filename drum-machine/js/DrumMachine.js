@@ -44,6 +44,18 @@ export class DrumMachine {
   /** @type {string} */
   #theme;
 
+  /** @type {Function|null} Lazy AudioContext factory from TransportSync */
+  #getAudioContext;
+
+  /** @type {Function|null} Sync callback: fired after start */
+  #onStart;
+
+  /** @type {Function|null} Sync callback: fired after stop */
+  #onStop;
+
+  /** @type {Function|null} Sync callback: fired after BPM change */
+  #onBPMChange;
+
   /** Available themes in rotation order. */
   static THEMES = ['bunker', 'vintage'];
 
@@ -52,11 +64,21 @@ export class DrumMachine {
    * @param {object} [opts]
    * @param {number} [opts.bpm=120]
    * @param {string} [opts.theme='bunker']
+   * @param {Function} [opts.getAudioContext] — lazy factory returning shared AudioContext
+   * @param {Function} [opts.onStart] — sync callback fired after playback starts
+   * @param {Function} [opts.onStop] — sync callback fired after playback stops
+   * @param {Function} [opts.onBPMChange] — sync callback fired after BPM changes, receives new BPM
    */
   constructor(container, opts = {}) {
     this.#container = container;
     this.#theme = opts.theme || container.dataset.theme || 'bunker';
     container.dataset.theme = this.#theme;
+
+    // TransportSync callbacks (null when standalone)
+    this.#getAudioContext = opts.getAudioContext || null;
+    this.#onStart = opts.onStart || null;
+    this.#onStop = opts.onStop || null;
+    this.#onBPMChange = opts.onBPMChange || null;
 
     // Core modules
     this.#engine = new AudioEngine();
@@ -96,9 +118,11 @@ export class DrumMachine {
    * Start playback.
    */
   start() {
-    this.#engine.init();
+    const ctx = this.#getAudioContext ? this.#getAudioContext() : undefined;
+    this.#engine.init(ctx);
     this.#sequencer.start();
     this.#ui.refreshTransport(true);
+    if (this.#onStart) this.#onStart();
   }
 
   /**
@@ -111,6 +135,7 @@ export class DrumMachine {
     if (this.#ui.vuMeter) {
       this.#ui.vuMeter.reset();
     }
+    if (this.#onStop) this.#onStop();
   }
 
   /**
@@ -171,6 +196,7 @@ export class DrumMachine {
   #changeBPM(delta) {
     this.#sequencer.setBPM(this.#sequencer.bpm + delta * 5);
     this.#ui.refreshBPM(this.#sequencer.bpm);
+    if (this.#onBPMChange) this.#onBPMChange(this.#sequencer.bpm);
   }
 
   /**
@@ -210,7 +236,8 @@ export class DrumMachine {
    * @param {string} id
    */
   #previewInstrument(id) {
-    this.#engine.init();
+    const ctx = this.#getAudioContext ? this.#getAudioContext() : undefined;
+    this.#engine.init(ctx);
     this.#synth.trigger(id, this.#engine.currentTime, this.#store.getTuning(id));
   }
 
