@@ -124,30 +124,87 @@
               <p class="section-header__tagline">"Upload a rave flier. Get the full story."</p>
             </div>
 
+            <p class="card__description reveal" style="margin-bottom: var(--space-lg);">raiveFlier is an open-source analysis engine for electronic music culture. Upload an image of a rave flier &mdash; the photocopied, screen-printed, and digitally designed event posters that have documented underground dance music since the late 1980s &mdash; and the system produces deeply researched, citation-backed profiles of every artist, venue, promoter, and event found on the flier.</p>
+
             <div class="feature-grid">
               <div class="card reveal reveal--delay-1">
                 <span class="card__icon" aria-hidden="true">&#x1F50D;</span>
                 <h3 class="card__title">AI-Powered OCR</h3>
-                <p class="card__description">Multi-provider fallback chain — LLM Vision, EasyOCR, and Tesseract — handles the stylized, warped, neon-outlined typography found on rave fliers. Confidence scoring selects the best result automatically.</p>
+                <p class="card__description">Multi-provider fallback chain &mdash; LLM Vision, EasyOCR, and Tesseract &mdash; handles the stylized, warped, neon-outlined typography found on rave fliers. Confidence scoring selects the best result automatically, with perceptual hashing to detect duplicate uploads.</p>
               </div>
 
               <div class="card reveal reveal--delay-2">
                 <span class="card__icon" aria-hidden="true">&#x1F4DA;</span>
                 <h3 class="card__title">5 Parallel Researchers</h3>
-                <p class="card__description">Dedicated researchers for artists, venues, promoters, date context, and event names query Discogs, MusicBrainz, Bandcamp, Beatport, and a RAG knowledge base simultaneously via asyncio.</p>
+                <p class="card__description">Dedicated researchers for artists, venues, promoters, date context, and event names query Discogs, MusicBrainz, Bandcamp, Beatport, and a RAG knowledge base simultaneously via asyncio. A human-in-the-loop confirmation gate lets users verify extracted entities before expensive research begins.</p>
               </div>
 
               <div class="card reveal reveal--delay-3">
                 <span class="card__icon" aria-hidden="true">&#x1F4CE;</span>
                 <h3 class="card__title">6-Tier Citation System</h3>
-                <p class="card__description">Every fact ranked from published books and academic articles down to forum posts. Higher-tier sources are weighted more heavily, giving you confidence in what you're reading.</p>
+                <p class="card__description">Every fact ranked from published books and academic articles (Tier 1) down to forum posts (Tier 6). Higher-tier sources are weighted more heavily in the LLM context window and displayed more prominently in results, giving you confidence in what you're reading.</p>
               </div>
 
               <div class="card reveal reveal--delay-4">
                 <span class="card__icon" aria-hidden="true">&#x1F517;</span>
                 <h3 class="card__title">Interconnection Mapping</h3>
-                <p class="card__description">LLM-powered relationship analysis maps shared record labels, recurring venue bookings, genre lineages, and geographic connections across decades of electronic music history.</p>
+                <p class="card__description">LLM-powered relationship analysis maps shared record labels, recurring venue bookings, genre lineages, and geographic connections. A graph aggregation service visualizes these links across decades of electronic music history.</p>
               </div>
+            </div>
+
+            <!-- RAG Pipeline Deep Dive -->
+            <div class="detail-block reveal" style="margin-top: var(--space-xl);">
+              <span class="detail-block__label">Core Architecture</span>
+              <h3 class="detail-block__title">RAG Pipeline &mdash; Retrieval-Augmented Generation</h3>
+              <p class="detail-block__description">The RAG pipeline is what transforms raiveFlier from a "summarize web search results" tool into a deeply contextual analysis engine. A curated knowledge base of electronic music history &mdash; sourced from published books, interviews, longform journalism, and prior analyses &mdash; is chunked, embedded, and stored in a ChromaDB vector database. When the system researches an artist or venue, it doesn't just search the web: it retrieves semantically relevant passages from this corpus and injects them into the LLM prompt alongside live API data, producing answers grounded in verified, citation-backed sources.</p>
+
+              <div class="pipeline-flow" aria-label="RAG ingestion pipeline flow">
+                <span class="pipeline-flow__step">Source Document</span>
+                <span class="pipeline-flow__arrow" aria-hidden="true">&rarr;</span>
+                <span class="pipeline-flow__step">Chunker (~500 tokens)</span>
+                <span class="pipeline-flow__arrow" aria-hidden="true">&rarr;</span>
+                <span class="pipeline-flow__step">MetadataExtractor</span>
+                <span class="pipeline-flow__arrow" aria-hidden="true">&rarr;</span>
+                <span class="pipeline-flow__step">Embedding</span>
+                <span class="pipeline-flow__arrow" aria-hidden="true">&rarr;</span>
+                <span class="pipeline-flow__step">ChromaDB</span>
+              </div>
+
+              <p class="detail-block__description"><strong>Ingestion:</strong> Source documents (books, articles, interviews, audio transcripts) are processed through format-specific parsers, split into overlapping ~500-token chunks with paragraph-aware boundaries, then enriched with LLM-extracted metadata tags &mdash; entity names, genres, geographic references, time periods &mdash; before being embedded and stored in ChromaDB.</p>
+
+              <p class="detail-block__description"><strong>Retrieval &amp; Natural Language Queries:</strong> When a query enters the system, it passes through alias expansion (mapping artist names to known aliases), HyDE-lite query expansion via the LLM, and intelligent filter detection that extracts temporal, geographic, and genre signals from natural language. The expanded query is embedded and searched against the vector store with metadata filters. A tiered retrieval strategy queries books, articles, interviews, and events in parallel, with per-source deduplication (max 3 chunks from any single document) preventing one long source from dominating results.</p>
+
+              <p class="detail-block__description"><strong>Result Filtering:</strong> Results are filtered at three levels: ChromaDB-native filters for publication dates, source types, and citation tiers; Python post-filters for entity, geographic, and genre tag matching; and a final ranking pass that sorts by cosine similarity with configurable minimum thresholds. The LLM synthesizes the top-ranked passages into natural-language answers with inline citations.</p>
+
+              <p class="detail-block__description"><strong>Self-Improving Feedback Loop:</strong> Completed flier analyses are automatically ingested back into the corpus as tier-3 sources. The more fliers are analyzed, the richer the context available for future analyses &mdash; analyzing a 1993 Orbital flier creates corpus chunks about Orbital's early career, which later enhances analysis of a 1995 flier featuring Orbital alongside Aphex Twin.</p>
+            </div>
+
+            <!-- RAG Pipeline: Where It's Headed -->
+            <div class="detail-block reveal" style="margin-top: var(--space-md);">
+              <span class="detail-block__label">In Progress</span>
+              <h3 class="detail-block__title">Perfecting Natural Language Responses</h3>
+              <p class="detail-block__description">The RAG pipeline is production-ready and serving queries, but active development continues on three fronts:</p>
+              <ul class="detail-block__list">
+                <li><strong>Response Quality Tuning</strong> &mdash; System prompts are being iteratively refined to produce direct, expert-level answers without preamble or restating the question. Temperature tuning (0.1 for metadata extraction, higher for synthesis) is calibrated per use case.</li>
+                <li><strong>Corpus Depth</strong> &mdash; The knowledge base is being expanded through raiveFeeder with book ingestion, interview transcription, and LLM-guided web crawling that scores page relevance before ingesting content.</li>
+                <li><strong>Filter Precision</strong> &mdash; Genre tag matching currently uses bidirectional substring matching as a post-filter (ChromaDB doesn't natively support <code>$contains</code> on metadata). Work continues on more granular multi-faceted filtering and relevance threshold optimization to reduce noise in results.</li>
+                <li><strong>Context Window Budgeting</strong> &mdash; Each chunk carries a token count for precise context window management, enabling smarter selection of which passages fit within the LLM's context limits while maximizing information density.</li>
+              </ul>
+            </div>
+
+            <!-- raiveFeeder Companion -->
+            <div class="detail-block reveal" style="margin-top: var(--space-md);">
+              <span class="detail-block__label">Companion Tool &nbsp;<span class="status-tag status-tag--wip"><span class="status-tag__dot"></span> In Development</span></span>
+              <h3 class="detail-block__title">raiveFeeder &mdash; Corpus Management</h3>
+              <p class="detail-block__description">raiveFeeder is a companion FastAPI application (port 8001) that decouples corpus maintenance from the main analysis engine. It shares the same ChromaDB vector store and provider ecosystem as raiveFlier &mdash; content ingested through raiveFeeder is immediately available for RAG retrieval.</p>
+              <ul class="detail-block__list">
+                <li><strong>Multi-Format Document Ingestion</strong> &mdash; PDF, EPUB, TXT, DOCX, RTF, MOBI, and DJVU are converted, chunked, tagged, embedded, and stored in a unified pipeline.</li>
+                <li><strong>Audio Transcription</strong> &mdash; Whisper integration (local via faster-whisper or cloud via OpenAI API) transcribes interviews, DJ sets, and lectures into searchable corpus chunks.</li>
+                <li><strong>Image OCR Ingestion</strong> &mdash; Single-flier and multi-page scan modes extract text from historical flier archives and embed them directly into the knowledge base.</li>
+                <li><strong>LLM-Guided Web Crawling</strong> &mdash; An intelligent crawler scores each page's relevance (0&ndash;10) to a natural language query and predicts link relevance before queueing, narrowing crawls to topically useful content. Blind mode available for full-site harvesting.</li>
+                <li><strong>Content Approval Queue</strong> &mdash; Optional moderation with GitHub issue integration allows admin review before ingestion into the production corpus.</li>
+                <li><strong>Corpus Publishing</strong> &mdash; One API call pushes the ChromaDB tarball to a GitHub release and triggers a Render redeploy, keeping the production knowledge base in sync.</li>
+              </ul>
             </div>
 
             <div class="tech-badges reveal">
@@ -160,6 +217,9 @@
               <span class="badge">RAG</span>
               <span class="badge">Discogs</span>
               <span class="badge">MusicBrainz</span>
+              <span class="badge">Bandcamp</span>
+              <span class="badge">Beatport</span>
+              <span class="badge">Whisper</span>
             </div>
 
             <div class="stats reveal">
@@ -168,7 +228,7 @@
                 <div class="stat__label">Lines of Code</div>
               </div>
               <div class="stat">
-                <div class="stat__value">1,174</div>
+                <div class="stat__value">1,313</div>
                 <div class="stat__label">Tests</div>
               </div>
               <div class="stat">
@@ -228,59 +288,98 @@
               <p class="section-header__tagline">"Reclaim Your Booking. Own Your Tour."</p>
             </div>
 
+            <p class="card__description reveal" style="margin-bottom: var(--space-lg);">Resistor is a production-deployed, multi-sided marketplace enabling electronic music artists to self-book tours by connecting directly with promoters and venues. The platform eliminates traditional booking agency overhead through secure escrow payments, digital contract signing, real-time negotiation, and tour visualization tools &mdash; serving four distinct user roles: Artist, Promoter, Venue, and Admin.</p>
+
             <div class="feature-grid">
               <div class="card reveal reveal--delay-1">
                 <span class="card__icon" aria-hidden="true">&#x1F91D;</span>
                 <h3 class="card__title">Direct Booking</h3>
-                <p class="card__description">Self-service marketplace with zero commission on the base tier. Artists post city-by-city availability with minimum fees; promoters send structured booking offers and negotiate through multi-round counter-offers.</p>
+                <p class="card__description">Self-service marketplace with configurable commission. Artists post city-by-city availability with minimum fees; promoters send structured booking offers and negotiate through unlimited counter-offer rounds with full history and delta tracking. Overlap detection prevents double-booking.</p>
               </div>
 
               <div class="card reveal reveal--delay-2">
                 <span class="card__icon" aria-hidden="true">&#x1F5FA;</span>
                 <h3 class="card__title">Interactive Map</h3>
-                <p class="card__description">Browse available artists on a map-driven discovery interface. Promoters find talent by city, date, and genre. Venues list availability and capacity — book talent and space in one platform.</p>
+                <p class="card__description">Google Maps integration with dark custom styling. City selection mode builds tour itineraries with geodesic polylines. Promoters discover talent by city, date, genre, and fee range. Venues list availability and capacity &mdash; book talent and space in one platform. 40+ cities with timezone and airport data.</p>
               </div>
 
               <div class="card reveal reveal--delay-3">
                 <span class="card__icon" aria-hidden="true">&#x1F512;</span>
-                <h3 class="card__title">Escrow Payments</h3>
-                <p class="card__description">PayPal escrow with scheduled disbursements — travel costs paid immediately, performance fees split pre/post event. Digital contracts with PDF export create a binding record.</p>
+                <h3 class="card__title">Three-Part Escrow</h3>
+                <p class="card__description">PayPal Commerce escrow with three timed disbursements: travel costs paid immediately on capture, 50% artist fee at T&minus;14 days, and 50% at T&minus;1 business day. All calculations use integer cents &mdash; no floating-point. Basis-point payment splits enable multi-party deals.</p>
               </div>
 
               <div class="card reveal reveal--delay-4">
                 <span class="card__icon" aria-hidden="true">&#x1F4B0;</span>
                 <h3 class="card__title">Auction Pricing</h3>
-                <p class="card__description">Promoters compete with offers above artist minimums through multi-round negotiation. Fair market pricing driven by real demand — not agency markups.</p>
+                <p class="card__description">Promoters compete with offers above artist minimums through multi-round negotiation with color-coded delta indicators. Concurrent modification guards via updatedAt timestamps prevent race conditions. Fair market pricing driven by real demand.</p>
               </div>
             </div>
 
+            <!-- Four-Sided Marketplace -->
+            <div class="detail-block reveal" style="margin-top: var(--space-xl);">
+              <span class="detail-block__label">Platform Architecture</span>
+              <h3 class="detail-block__title">Four-Sided Marketplace</h3>
+              <p class="detail-block__description">Resistor serves four distinct user roles, each with dedicated workflows and dashboards:</p>
+              <ul class="detail-block__list">
+                <li><strong>Artists</strong> &mdash; Post availability windows (city, date, fee/travel range), receive and negotiate booking requests, sign digital contracts, manage tour calendars, and receive escrow-protected PayPal disbursements on a three-part schedule.</li>
+                <li><strong>Promoters</strong> &mdash; Discover artists by genre, city, date, and fee range. Create booking offers, post "wanted listings" to attract artists, configure multi-party payment splits, and book venues independently.</li>
+                <li><strong>Venues</strong> &mdash; List availability with capacity, pricing, and amenities. Receive and negotiate rental bookings from promoters. Track settlement payments and discover promoters for outreach.</li>
+                <li><strong>Admin</strong> &mdash; User approval queue, dispute resolution with evidence review, payment management (refunds, retries, per-artist fee config), review moderation, audit logging, and service health monitoring.</li>
+              </ul>
+            </div>
+
+            <!-- Digital Contracts & Platform Features -->
+            <div class="detail-block reveal" style="margin-top: var(--space-md);">
+              <span class="detail-block__label">Key Capabilities</span>
+              <h3 class="detail-block__title">Contracts, Messaging &amp; i18n</h3>
+              <ul class="detail-block__list">
+                <li><strong>Digital Contracts</strong> &mdash; Auto-generated from booking terms with HTML5 canvas signatures (brass-colored pen, touch support), server-side PDF generation via jsPDF, and dual-signature requirement before payment proceeds.</li>
+                <li><strong>Real-Time Messaging</strong> &mdash; Direct role-to-role messaging via Server-Sent Events with unread tracking, badge counts, and inline translation for cross-language negotiation.</li>
+                <li><strong>10 Languages</strong> &mdash; Full internationalization: EN, DE, ES, FR, IT, NL, PL, JA, KO, ZH. Namespaced dictionary files per feature domain with automatic locale detection.</li>
+                <li><strong>Calendar Integration</strong> &mdash; RFC 5545 iCal feeds secured with HMAC-SHA256 signed tokens, compatible with Google Calendar, Apple Calendar, and Outlook.</li>
+                <li><strong>CPC Featured Listings</strong> &mdash; Self-regulating advertising market: daily budget determines search placement at $0.10/click, auto-pause on exhaustion.</li>
+              </ul>
+            </div>
+
+            <!-- Security & Compliance -->
+            <div class="detail-block reveal" style="margin-top: var(--space-md);">
+              <span class="detail-block__label">Security</span>
+              <h3 class="detail-block__title">Defense-in-Depth</h3>
+              <p class="detail-block__description">Production-grade security across every layer: NextAuth v5 with JWT sessions (15min access, 7-day refresh), RFC 6238 TOTP 2FA with backup codes, double-submit CSRF tokens with constant-time comparison, dual-backend rate limiting (Redis + in-memory fallback) with 12 presets, AES-256-GCM encryption at rest, Zod runtime validation on every API boundary, and restrictive Content-Security-Policy headers. GDPR-compliant with data export, soft deletes, and minimal cookies. WCAG 2.1 AA accessible with automated axe-core testing.</p>
+            </div>
+
             <div class="tech-badges reveal">
-              <span class="badge">Next.js</span>
+              <span class="badge">Next.js 14</span>
               <span class="badge">TypeScript</span>
+              <span class="badge">React 18</span>
               <span class="badge">PostgreSQL</span>
-              <span class="badge">Prisma ORM</span>
+              <span class="badge">Prisma 5</span>
               <span class="badge">PayPal Commerce</span>
-              <span class="badge">NextAuth</span>
+              <span class="badge">NextAuth v5</span>
+              <span class="badge">Upstash Redis</span>
               <span class="badge">Zod</span>
               <span class="badge">Google Maps</span>
+              <span class="badge">Sentry</span>
+              <span class="badge">Pino</span>
             </div>
 
             <div class="stats reveal">
               <div class="stat">
-                <div class="stat__value">~140K</div>
-                <div class="stat__label">Lines of Code</div>
+                <div class="stat__value">69+</div>
+                <div class="stat__label">API Endpoints</div>
               </div>
               <div class="stat">
-                <div class="stat__value">111</div>
-                <div class="stat__label">API Routes</div>
-              </div>
-              <div class="stat">
-                <div class="stat__value">29</div>
+                <div class="stat__value">32</div>
                 <div class="stat__label">DB Models</div>
               </div>
               <div class="stat">
-                <div class="stat__value">27</div>
+                <div class="stat__value">40+</div>
                 <div class="stat__label">Services</div>
+              </div>
+              <div class="stat">
+                <div class="stat__value">95%</div>
+                <div class="stat__label">Test Coverage</div>
               </div>
             </div>
 
@@ -313,32 +412,32 @@
 
           <div class="card reveal reveal--delay-1">
             <h3 class="card__title">Layered Architecture</h3>
-            <p class="card__description">Enterprise layered design with dependency injection across both platforms. API routes, service layers, repository layers, and external adapters — all connected through typed interfaces. Swapping a provider means changing one line in the composition root.</p>
+            <p class="card__description">Enterprise layered design with dependency injection across both platforms. raiveFlier uses a 7-layer hierarchy (Frontend &rarr; API &rarr; Pipeline &rarr; Services &rarr; Interfaces &rarr; Providers &rarr; Models) with a single composition root. Resistor implements Clean Architecture with Presentation, Middleware, Application (DTOs), Business Logic (40+ services), Data Access (Repository interfaces), External Adapters, and Infrastructure layers &mdash; wired through a DI container managing ~50 services and ~25 repositories.</p>
           </div>
 
           <div class="card reveal reveal--delay-2">
             <h3 class="card__title">Open Source</h3>
-            <p class="card__description">MIT licensed tools built in the open. 300+ commits and 60+ merged PRs across both platforms. Community-driven development with transparent roadmaps.</p>
+            <p class="card__description">MIT licensed tools built in the open. 300+ commits across both platforms. Transparent development with conventional commits, automated changelogs, and CI pipelines that enforce lint, typecheck, test, and security audit on every push.</p>
           </div>
 
           <div class="card reveal reveal--delay-3">
             <h3 class="card__title">Music-First</h3>
-            <p class="card__description">Built by musicians, for musicians and music culture. Every feature informed by real needs from the underground electronic music scene — from booking logistics to flier archival.</p>
+            <p class="card__description">Built by musicians, for musicians and music culture. Every feature informed by real needs from the underground electronic music scene &mdash; from booking logistics and escrow payment scheduling to rave flier archival and cultural research.</p>
           </div>
 
           <div class="card reveal reveal--delay-1">
             <h3 class="card__title">Adapter Pattern</h3>
-            <p class="card__description">9 abstract interfaces in raiveFlier, 22 repository interfaces in Resistor. LLMs, OCR engines, music databases, payment providers, vector stores — all accessed through contracts. No vendor lock-in, ever.</p>
+            <p class="card__description">9 abstract interfaces in raiveFlier (ILLMProvider, IOCRProvider, IEmbeddingProvider, IVectorStoreProvider, IMusicDBProvider, and more), 25+ repository interfaces in Resistor &mdash; plus external adapters for PayPal, Resend, Cloudinary, and Sentry. Provider fallback chains are 3&ndash;4 levels deep: if the primary service fails, the system gracefully degrades to the next available option. No vendor lock-in, ever.</p>
           </div>
 
           <div class="card reveal reveal--delay-2">
             <h3 class="card__title">Dual Stack</h3>
-            <p class="card__description">Python 3.12 with FastAPI and Pydantic v2 for raiveFlier's research engine. TypeScript with Next.js and Prisma ORM for Resistor's booking marketplace. PostgreSQL, ChromaDB, WebSocket, and PayPal Commerce across the ecosystem.</p>
+            <p class="card__description">Python 3.12 with FastAPI, Pydantic v2, and structlog for raiveFlier's research engine &mdash; immutable state objects, asyncio concurrency, and 4 embedding provider options. TypeScript 5 (strict) with Next.js 14, React 18, and Prisma 5 for Resistor's marketplace &mdash; React Server Components, cursor-based pagination, and tiered Redis caching. Deployed on Render and Vercel.</p>
           </div>
 
           <div class="card reveal reveal--delay-3">
-            <h3 class="card__title">Security</h3>
-            <p class="card__description">OWASP Top-10 scanning, dependency auditing, secret detection, TLS enforcement. Zod validation on every API boundary, custom error hierarchies, and structured JSON logging across all services.</p>
+            <h3 class="card__title">Security &amp; Testing</h3>
+            <p class="card__description">Defense-in-depth across both platforms: OWASP Top-10 scanning, CSRF protection, rate limiting, AES-256-GCM encryption, and structured JSON logging. Zod + Pydantic validation on every API boundary. Combined 2,500+ tests across pytest (raiveFlier) and Vitest/Playwright (Resistor) with 95% coverage. Automated axe-core accessibility auditing targets WCAG 2.1 AA.</p>
           </div>
 
         </div>

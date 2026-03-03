@@ -316,6 +316,161 @@
   opacity: 0.6;
 }
 
+/* --- Detail Block (deep-dive subsections within product sections) --- */
+.detail-block {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border-left: 3px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.accent-amethyst .detail-block {
+  border-left-color: var(--color-amethyst);
+  background: rgba(106, 74, 138, 0.04);
+}
+
+.accent-brass .detail-block {
+  border-left-color: var(--color-brass-dark);
+  background: rgba(196, 166, 122, 0.04);
+}
+
+.detail-block__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.accent-amethyst .detail-block__label { color: var(--color-amethyst-light); }
+.accent-brass .detail-block__label { color: var(--color-brass); }
+
+.detail-block__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.detail-block__description {
+  font-size: var(--fs-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-loose);
+  margin-bottom: var(--space-md);
+}
+
+.detail-block__description:last-child {
+  margin-bottom: 0;
+}
+
+.detail-block__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-block__list li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: var(--space-sm);
+  font-size: var(--fs-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-loose);
+}
+
+.detail-block__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-border-light);
+}
+
+.accent-amethyst .detail-block__list li::before {
+  background: var(--color-amethyst);
+}
+
+.accent-brass .detail-block__list li::before {
+  background: var(--color-brass-dark);
+}
+
+/* --- Pipeline Flow Diagram (text-based) --- */
+.pipeline-flow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+
+.pipeline-flow__step {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.accent-amethyst .pipeline-flow__step {
+  border-color: var(--color-amethyst-dark);
+  color: var(--color-amethyst-light);
+}
+
+.accent-brass .pipeline-flow__step {
+  border-color: var(--color-brass-dark);
+  color: var(--color-brass);
+}
+
+.pipeline-flow__arrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+/* --- Status Tag --- */
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.03em;
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+.status-tag--active {
+  color: #5aaa80;
+  border: 1px solid rgba(90, 170, 128, 0.3);
+  background: rgba(90, 170, 128, 0.08);
+}
+
+.status-tag--wip {
+  color: #d0b468;
+  border: 1px solid rgba(208, 180, 104, 0.3);
+  background: rgba(208, 180, 104, 0.08);
+}
+
+.status-tag__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 /* --- CTA Row --- */
 .cta-row {
   display: flex;
@@ -360,6 +515,10 @@
 
   .stats {
     gap: var(--space-lg);
+  }
+
+  .pipeline-flow {
+    justify-content: flex-start;
   }
 }
 
@@ -423,6 +582,20 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .detail-block {
+    padding: var(--space-md);
+  }
+
+  .pipeline-flow {
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+  }
+
+  .pipeline-flow__step {
+    font-size: 0.65rem;
+    padding: 3px var(--space-xs);
+  }
 }
 
 /* Small Mobile (< 480px) */
@@ -432,9 +605,13 @@
     --space-2xl: 2rem;
   }
 
-  /* Dock: hide VU meter on very small screens */
   .vu-meter {
-    display: none;
+    width: 64px;
+    height: 40px;
+  }
+
+  .vu-meter__needle {
+    height: 26px;
   }
 
   .synth-dock__knob {
@@ -444,5 +621,12 @@
 
   .led-display__text {
     font-size: 1.25rem;
+  }
+}
+
+/* Very Small Mobile (< 400px) */
+@media (max-width: 400px) {
+  .vu-meter {
+    display: none;
   }
 }
