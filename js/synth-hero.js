@@ -3,7 +3,14 @@
  * Resistor Technology · resistor.technology
  *
  * Handles: rotary knobs (dock), VU meter needle, product switches
- * All controls map to CSS custom properties on :root
+ *
+ * GRAIN knob — Scroll speed/direction controller
+ *   Center (0°) = stopped. Clockwise = scroll down. Counter-clockwise = scroll up.
+ *   Quadratic speed scaling for fine control near center.
+ *
+ * GLOW knob — Color inversion (photo negative) controller
+ *   Full left = normal colors. Full right = fully inverted.
+ *   Drives --color-invert CSS property (0..1) for mix-blend-mode overlay.
  */
 
 (function () {
@@ -22,6 +29,24 @@
   }
 
   // ============================================================
+  // GRAIN SCROLL STATE (module-level)
+  // ============================================================
+
+  var grainScrollSpeed = 0;
+  var isGrainScrolling = false;
+  var SCROLL_MAX_SPEED = 12;   // max pixels per frame at ±140°
+  var SCROLL_DEAD_ZONE = 5;    // degrees around center with no scroll
+
+  function grainScrollLoop() {
+    if (Math.abs(grainScrollSpeed) > 0.05) {
+      window.scrollBy(0, grainScrollSpeed);
+      requestAnimationFrame(grainScrollLoop);
+    } else {
+      isGrainScrolling = false;
+    }
+  }
+
+  // ============================================================
   // ROTARY KNOBS (in dock)
   // ============================================================
 
@@ -32,7 +57,9 @@
     var control = wrap.dataset.control;
 
     // State: angle in degrees (-140 to +140, 0 = noon)
-    var angle = control === 'grain' ? -100 : -60;
+    // GRAIN starts at center (0°, no scroll)
+    // GLOW starts at full left (-140°, no inversion)
+    var angle = control === 'grain' ? 0 : -140;
     var isDragging = false;
     var startY = 0;
     var startAngle = 0;
@@ -40,14 +67,29 @@
     function updateKnob() {
       knobEl.style.transform = 'rotate(' + angle + 'deg)';
 
-      // Map angle (-140..+140) to 0..1
-      var normalized = mapRange(angle, -140, 140, 0, 1);
-
       if (control === 'grain') {
-        document.documentElement.style.setProperty('--grain-opacity', (normalized * 0.10).toFixed(3));
-        wrap.setAttribute('aria-valuenow', Math.round(normalized * 100));
+        // --- Scroll Speed Controller ---
+        // Dead zone around center
+        if (Math.abs(angle) < SCROLL_DEAD_ZONE) {
+          grainScrollSpeed = 0;
+        } else {
+          // Quadratic scaling: fine control near center, fast at extremes
+          var norm = angle / 140; // -1 to 1
+          grainScrollSpeed = norm * Math.abs(norm) * SCROLL_MAX_SPEED;
+        }
+
+        wrap.setAttribute('aria-valuenow', Math.round(mapRange(angle, -140, 140, 0, 100)));
+
+        // Start scroll loop if not already running
+        if (!prefersReducedMotion && !isGrainScrolling && Math.abs(grainScrollSpeed) > 0.05) {
+          isGrainScrolling = true;
+          requestAnimationFrame(grainScrollLoop);
+        }
+
       } else if (control === 'glow') {
-        document.documentElement.style.setProperty('--glow-intensity', normalized.toFixed(2));
+        // --- Color Inversion Controller ---
+        var normalized = mapRange(angle, -140, 140, 0, 1);
+        document.documentElement.style.setProperty('--color-invert', normalized.toFixed(3));
         wrap.setAttribute('aria-valuenow', Math.round(normalized * 100));
       }
     }
