@@ -22,6 +22,9 @@ export class AudioEngine {
   /** @type {boolean} */
   #initialized = false;
 
+  /** @type {boolean} Whether this engine owns (and should close) its AudioContext */
+  #ownsContext = true;
+
   get context() {
     return this.#ctx;
   }
@@ -45,8 +48,9 @@ export class AudioEngine {
   /**
    * Initialize the AudioContext (must be called from a user gesture).
    * Safe to call multiple times — subsequent calls resume if suspended.
+   * @param {AudioContext} [externalContext] — shared context from TransportSync
    */
-  init() {
+  init(externalContext) {
     if (this.#initialized) {
       if (this.#ctx.state === 'suspended') {
         this.#ctx.resume();
@@ -54,7 +58,13 @@ export class AudioEngine {
       return;
     }
 
-    this.#ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (externalContext) {
+      this.#ctx = externalContext;
+      this.#ownsContext = false;
+    } else {
+      this.#ctx = new (window.AudioContext || window.webkitAudioContext)();
+      this.#ownsContext = true;
+    }
 
     // Compressor → destination (prevents clipping with multiple voices)
     this.#compressor = this.#ctx.createDynamicsCompressor();
@@ -110,13 +120,13 @@ export class AudioEngine {
   }
 
   /**
-   * Tear down the AudioContext.
+   * Tear down the AudioContext (only closes if we own it).
    */
   destroy() {
-    if (this.#ctx) {
+    if (this.#ctx && this.#ownsContext) {
       this.#ctx.close();
-      this.#ctx = null;
     }
+    this.#ctx = null;
     this.#initialized = false;
   }
 }

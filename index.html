@@ -610,22 +610,35 @@
   <script src="js/scroll-animations.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- Dr_Fun Drum Machine (ES Module — manual init for site integration) -->
+  <!-- TransportSync — Unified beat/tempo sync for Dr_Fun + LakeShoreDr -->
   <script type="module">
     import { DrumMachine } from './drum-machine/js/DrumMachine.js';
-    const container = document.getElementById('site-drum-machine');
-    if (container) {
-      new DrumMachine(container, { bpm: 120, theme: 'bunker' });
-    }
-  </script>
-
-  <!-- LakeShoreDr Bass Synth (ES Module — manual init for site integration) -->
-  <script type="module">
     import { LakeShoreDr } from './bass-synth/js/LakeShoreDr.js';
-    const container = document.getElementById('site-bass-synth');
-    if (container) {
-      new LakeShoreDr(container, { bpm: 130, theme: 'bunker' });
-    }
+    import { TransportSync } from './js/TransportSync.js';
+
+    const sync = new TransportSync();
+
+    const dmContainer = document.getElementById('site-drum-machine');
+    const bsContainer = document.getElementById('site-bass-synth');
+
+    const dm = dmContainer ? new DrumMachine(dmContainer, {
+      bpm: 120, theme: 'bunker',
+      getAudioContext: () => sync.init(),
+      onStart: () => sync.startAll(),
+      onStop: () => sync.stopAll(),
+      onBPMChange: (bpm) => sync.syncBPM(bpm),
+    }) : null;
+
+    const bass = bsContainer ? new LakeShoreDr(bsContainer, {
+      bpm: 120, theme: 'bunker',
+      getAudioContext: () => sync.init(),
+      onStart: () => sync.startAll(),
+      onStop: () => sync.stopAll(),
+      onBPMChange: (bpm) => sync.syncBPM(bpm),
+    }) : null;
+
+    if (dm) sync.register('drums', dm);
+    if (bass) sync.register('bass', bass);
   </script>
 
 </body>
