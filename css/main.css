@@ -172,6 +172,14 @@
   );
 }
 
+.section--lakeshoredr {
+  background: linear-gradient(180deg,
+    var(--color-bg) 0%,
+    rgba(90, 184, 160, 0.03) 50%,
+    var(--color-bg) 100%
+  );
+}
+
 /* --- Divider --- */
 .section-divider {
   width: 100%;

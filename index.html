@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/synth-elements.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="drum-machine/drum-machine.css">
+  <link rel="stylesheet" href="bass-synth/bass-synth.css">
 </head>
 <body>
 
@@ -50,6 +51,7 @@
       <a href="#resistor" class="nav__link link-animated">Resistor</a>
       <a href="#technology" class="nav__link link-animated">Technology</a>
       <a href="#dr-fun" class="nav__link link-animated">Dr_Fun</a>
+      <a href="#lakeshoredr" class="nav__link link-animated">LakeShoreDr</a>
       <a href="#contact" class="nav__link link-animated">Contact</a>
     </div>
 
@@ -66,6 +68,7 @@
     <a href="#resistor" class="nav__mobile-link">Resistor</a>
     <a href="#technology" class="nav__mobile-link">Technology</a>
     <a href="#dr-fun" class="nav__mobile-link">Dr_Fun</a>
+    <a href="#lakeshoredr" class="nav__mobile-link">LakeShoreDr</a>
     <a href="#contact" class="nav__mobile-link">Contact</a>
   </div>
 
@@ -480,6 +483,37 @@
     </section>
 
     <!-- ============================================================
+         LakeShoreDr — TB-303 Bass Synthesizer
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="lakeshoredr" class="section section--lakeshoredr accent-teal" aria-label="LakeShoreDr bass synthesizer">
+      <div class="section__inner">
+
+        <div class="section-header reveal" style="text-align: center; max-width: 600px; margin: 0 auto var(--space-lg);">
+          <span class="section-header__label">Interactive</span>
+          <h2 class="section-header__title">LakeShoreDr</h2>
+          <p class="section-header__tagline">TB-303 Bass Synthesizer</p>
+        </div>
+
+        <div class="reveal reveal--delay-1">
+          <div class="bass-synth" id="site-bass-synth" data-theme="bunker"></div>
+        </div>
+
+        <div class="tech-badges reveal reveal--delay-2" style="justify-content: center; margin-top: var(--space-lg);">
+          <span class="badge">Web Audio API</span>
+          <span class="badge">Zero Dependencies</span>
+          <span class="badge">TB-303 Emulation</span>
+          <span class="badge">16 Steps</span>
+          <span class="badge">Slide &amp; Accent</span>
+          <span class="badge">Distortion</span>
+          <span class="badge">Dual Themes</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
          CONTACT
          ============================================================ -->
     <div class="section-divider" aria-hidden="true"></div>
@@ -507,6 +541,7 @@
         <a href="#raiveflier" class="footer__link">raiveFlier</a>
         <a href="#resistor" class="footer__link">Resistor</a>
         <a href="#dr-fun" class="footer__link">Dr_Fun</a>
+        <a href="#lakeshoredr" class="footer__link">LakeShoreDr</a>
         <a href="https://github.com/deeptechhouse" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="#contact" class="footer__link">Contact</a>
       </nav>
@@ -581,6 +616,15 @@
     const container = document.getElementById('site-drum-machine');
     if (container) {
       new DrumMachine(container, { bpm: 120, theme: 'bunker' });
+    }
+  </script>
+
+  <!-- LakeShoreDr Bass Synth (ES Module — manual init for site integration) -->
+  <script type="module">
+    import { LakeShoreDr } from './bass-synth/js/LakeShoreDr.js';
+    const container = document.getElementById('site-bass-synth');
+    if (container) {
+      new LakeShoreDr(container, { bpm: 130, theme: 'bunker' });
     }
   </script>
 

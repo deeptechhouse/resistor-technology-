@@ -1,0 +1,1052 @@
+/* ============================================================
+   BASS-SYNTH.CSS — LakeShoreDr Bass Synth Styles
+   Resistor Technology · resistor.technology
+
+   Two themes: "bunker" (site default) and "vintage" (classic 303).
+   All custom properties prefixed --bs-* to avoid conflicts.
+   All classes BEM-prefixed bs__ to avoid conflicts.
+   ============================================================ */
+
+/* --- Theme: Bunker (default — dark teal/brass) --- */
+.bass-synth,
+.bass-synth[data-theme="bunker"] {
+  --bs-bg:              #0e0e12;
+  --bs-surface:         #14141a;
+  --bs-surface-raised:  #1e1e24;
+  --bs-border:          #2a2a30;
+  --bs-border-light:    #3a3a40;
+  --bs-text:            #d8d5cd;
+  --bs-text-secondary:  #9a9a9e;
+  --bs-text-muted:      #6a6a70;
+  --bs-accent:          #5ab8a0;
+  --bs-accent-light:    #70d0b8;
+  --bs-accent-dark:     #408878;
+
+  /* Step group colors (4 groups of 4) */
+  --bs-step-g1:         #5ab8a0;   /* teal */
+  --bs-step-g2:         #a080c0;   /* amethyst */
+  --bs-step-g3:         #c4a67a;   /* brass */
+  --bs-step-g4:         #9a9a9e;   /* silver */
+
+  /* VU meter */
+  --bs-vu-bg:           linear-gradient(to bottom, #1a2a28, #0e1a18);
+  --bs-vu-border:       #2a5a4a;
+  --bs-vu-text:         rgba(90, 184, 160, 0.5);
+  --bs-vu-needle:       rgba(90, 184, 160, 0.9);
+  --bs-vu-needle-tip:   rgba(90, 184, 160, 0.3);
+  --bs-vu-scale:        rgba(90, 184, 160, 0.25);
+  --bs-vu-hub:          #408878;
+
+  /* LED */
+  --bs-led-on:          #5ab8a0;
+  --bs-led-off:         #1a1a20;
+  --bs-led-glow:        rgba(90, 184, 160, 0.6);
+
+  /* Fonts */
+  --bs-font-display:    'Space Grotesk', sans-serif;
+  --bs-font-mono:       'IBM Plex Mono', monospace;
+}
+
+/* --- Theme: Vintage (classic silver-face 303) --- */
+.bass-synth[data-theme="vintage"] {
+  --bs-bg:              #e8e0c8;
+  --bs-surface:         #d8d0b8;
+  --bs-surface-raised:  #c8c0a8;
+  --bs-border:          #b0a890;
+  --bs-border-light:    #c8c0a8;
+  --bs-text:            #2a2018;
+  --bs-text-secondary:  #504030;
+  --bs-text-muted:      #8a7a68;
+  --bs-accent:          #c04020;
+  --bs-accent-light:    #e05030;
+  --bs-accent-dark:     #903018;
+
+  /* Classic 303 step colors */
+  --bs-step-g1:         #c04020;   /* red */
+  --bs-step-g2:         #d07020;   /* orange */
+  --bs-step-g3:         #c0a020;   /* gold */
+  --bs-step-g4:         #504030;   /* brown */
+
+  /* VU meter — cream face */
+  --bs-vu-bg:           linear-gradient(to bottom, #f5f0e0, #e8e0c8);
+  --bs-vu-border:       #a09070;
+  --bs-vu-text:         rgba(40, 30, 20, 0.6);
+  --bs-vu-needle:       rgba(20, 15, 10, 0.9);
+  --bs-vu-needle-tip:   rgba(20, 15, 10, 0.3);
+  --bs-vu-scale:        rgba(40, 30, 20, 0.25);
+  --bs-vu-hub:          #504030;
+
+  /* LED */
+  --bs-led-on:          #c04020;
+  --bs-led-off:         #c8b8a0;
+  --bs-led-glow:        rgba(192, 64, 32, 0.6);
+
+  /* Fonts — fallback stack */
+  --bs-font-display:    Helvetica, Arial, sans-serif;
+  --bs-font-mono:       'Courier New', Courier, monospace;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.bass-synth {
+  background: var(--bs-bg);
+  border: 1px solid var(--bs-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  font-family: var(--bs-font-mono);
+  color: var(--bs-text);
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================================
+   HEADER ROW
+   ============================================================ */
+
+.bs__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.bs__title {
+  font-family: var(--bs-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bs-accent);
+}
+
+/* --- Acid Smiley (303 culture nod) --- */
+
+.bs__smiley {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bs-accent);
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(90, 184, 160, 0.3);
+  transition: box-shadow 300ms, transform 300ms;
+}
+
+.bs__smiley:hover {
+  box-shadow: 0 0 14px rgba(90, 184, 160, 0.5);
+  transform: scale(1.1);
+}
+
+.bs__smiley-eye {
+  position: absolute;
+  width: 4px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bs-bg);
+  top: 7px;
+}
+
+.bs__smiley-eye--l { left: 6px; }
+.bs__smiley-eye--r { right: 6px; }
+
+.bs__smiley-mouth {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 6px;
+  border-bottom: 2.5px solid var(--bs-bg);
+  border-radius: 0 0 6px 6px;
+}
+
+.bass-synth[data-theme="bunker"] .bs__smiley {
+  box-shadow: 0 0 8px rgba(90, 184, 160, 0.3);
+}
+
+.bass-synth[data-theme="vintage"] .bs__smiley {
+  box-shadow: 0 0 8px rgba(192, 64, 32, 0.3);
+}
+
+.bs__transport {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bs__btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--bs-border-light);
+  border-radius: 4px;
+  background: var(--bs-surface);
+  color: var(--bs-text-secondary);
+  font-family: var(--bs-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.bs__btn:hover {
+  background: var(--bs-surface-raised);
+  border-color: var(--bs-accent);
+  color: var(--bs-text);
+}
+
+.bs__btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 2px;
+}
+
+.bs__btn.is-active {
+  background: var(--bs-accent);
+  border-color: var(--bs-accent);
+  color: var(--bs-bg);
+}
+
+.bs__theme-toggle {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--bs-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--bs-text-muted);
+  font-family: var(--bs-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms;
+}
+
+.bs__theme-toggle:hover {
+  color: var(--bs-text);
+  border-color: var(--bs-border-light);
+}
+
+.bs__theme-toggle:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   LED STRIP — 16 position indicators
+   ============================================================ */
+
+.bs__leds {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.bs__led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bs-led-off);
+  transition: background 80ms, box-shadow 80ms;
+  flex-shrink: 0;
+}
+
+.bs__led.is-active {
+  background: var(--bs-led-on);
+  box-shadow: 0 0 6px var(--bs-led-glow), 0 0 12px var(--bs-led-glow);
+}
+
+/* ============================================================
+   CONTROLS ROW — Knobs, BPM, VU Meter
+   ============================================================ */
+
+.bs__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.bs__knob-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* --- Rotary Knob (matches site knob style) --- */
+
+.bs__knob-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+
+.bs__knob-wrap:active {
+  cursor: grabbing;
+}
+
+.bs__knob-wrap.is-active {
+  cursor: grabbing;
+}
+
+.bs__knob-label {
+  font-family: var(--bs-font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--bs-text-muted);
+  text-align: center;
+}
+
+.bs__knob {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(from 200deg, #1a1a1a, #3a3a3a 90deg, #2a2a2a 180deg, #3a3a3a 270deg, #1a1a1a);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111;
+  transition: box-shadow 150ms;
+}
+
+.bs__knob:hover {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111,
+    0 0 12px rgba(90, 184, 160, 0.2);
+}
+
+.bs__knob-wrap:focus-visible .bs__knob {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 3px var(--bs-accent);
+}
+
+/* Knob hub */
+.bs__knob-cap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #444, #222);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Knob pointer */
+.bs__knob::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: #e8e0d0;
+  border-radius: 1px;
+}
+
+.bs__knob--small {
+  /* Smaller knob variant */
+}
+
+.bs__knob--small .bs__knob {
+  width: 36px;
+  height: 36px;
+}
+
+.bs__knob--small .bs__knob::after {
+  top: 3px;
+  height: 8px;
+}
+
+.bs__knob--small .bs__knob-cap {
+  width: 10px;
+  height: 10px;
+}
+
+/* --- BPM Display --- */
+
+.bs__bpm-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bs__bpm-value {
+  font-family: var(--bs-font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--bs-accent);
+  min-width: 3ch;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--bs-border);
+  border-radius: 3px;
+}
+
+.bs__bpm-label {
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--bs-text-muted);
+}
+
+.bs__bpm-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bs-border);
+  border-radius: 3px;
+  background: var(--bs-surface);
+  color: var(--bs-text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+  line-height: 1;
+}
+
+.bs__bpm-btn:hover {
+  background: var(--bs-surface-raised);
+  color: var(--bs-text);
+}
+
+.bs__bpm-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 1px;
+}
+
+/* --- VU Meter Container --- */
+
+.bs__vu-container {
+  flex-shrink: 0;
+}
+
+.bs__vu-meter {
+  width: 100px;
+  height: 56px;
+  background: var(--bs-vu-bg);
+  border: 1px solid var(--bs-vu-border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(90, 184, 160, 0.08);
+}
+
+.bs__vu-face {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--bs-font-mono);
+  font-size: 6px;
+  color: var(--bs-vu-text);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bs__vu-scale {
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  right: 10px;
+  height: 26px;
+  border-top: 1px solid var(--bs-vu-scale);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.bs__vu-marks {
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--bs-font-mono);
+  font-size: 5px;
+  color: var(--bs-vu-text);
+}
+
+.bs__vu-needle {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(to top, var(--bs-vu-needle), var(--bs-vu-needle-tip));
+  transform-origin: bottom center;
+  transform: rotate(-30deg);
+  box-shadow: 0 0 3px rgba(90, 184, 160, 0.3);
+}
+
+.bs__vu-needle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--bs-vu-hub);
+  border-radius: 50%;
+}
+
+/* ============================================================
+   WAVEFORM TOGGLE — SAW / SQR
+   ============================================================ */
+
+.bs__wave-toggle {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.bs__wave-btn {
+  padding: 0.35rem 1.2rem;
+  border: 1px solid var(--bs-border);
+  border-radius: 4px;
+  background: var(--bs-surface);
+  color: var(--bs-text-muted);
+  font-family: var(--bs-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms;
+  min-width: 60px;
+  text-align: center;
+}
+
+.bs__wave-btn:hover {
+  background: var(--bs-surface-raised);
+  color: var(--bs-text-secondary);
+}
+
+.bs__wave-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 2px;
+}
+
+.bs__wave-btn.is-active {
+  background: var(--bs-accent-dark);
+  border-color: var(--bs-accent);
+  color: var(--bs-text);
+}
+
+/* ============================================================
+   NOTE DISPLAY — shows note name for selected step
+   ============================================================ */
+
+.bs__note-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.bs__note-value {
+  font-family: var(--bs-font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--bs-accent);
+  min-width: 4ch;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--bs-border);
+  border-radius: 3px;
+}
+
+.bs__note-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bs-border);
+  border-radius: 3px;
+  background: var(--bs-surface);
+  color: var(--bs-text-secondary);
+  font-family: var(--bs-font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 150ms, color 150ms, border-color 150ms;
+  line-height: 1;
+}
+
+.bs__note-btn:hover {
+  background: var(--bs-surface-raised);
+  color: var(--bs-text);
+  border-color: var(--bs-border-light);
+}
+
+.bs__note-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 1px;
+}
+
+.bs__note-label {
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--bs-text-muted);
+}
+
+/* ============================================================
+   STEP GRID — 16 steps in 4 groups of 4
+   ============================================================ */
+
+.bs__step-grid {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+/* Visual gap between groups of 4 */
+.bs__step-group {
+  display: flex;
+  gap: 3px;
+}
+
+.bs__step-group + .bs__step-group {
+  margin-left: 6px;
+}
+
+.bs__step-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--bs-border);
+  border-radius: 3px;
+  background: var(--bs-surface);
+  cursor: pointer;
+  transition: background 100ms, border-color 100ms, box-shadow 100ms;
+  position: relative;
+}
+
+.bs__step-btn:hover {
+  border-color: var(--bs-border-light);
+}
+
+.bs__step-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 1px;
+}
+
+/* Active step (has a note programmed) — group colors */
+.bs__step-group:nth-child(1) .bs__step-btn.is-on {
+  background: var(--bs-step-g1);
+  border-color: var(--bs-step-g1);
+}
+
+.bs__step-group:nth-child(2) .bs__step-btn.is-on {
+  background: var(--bs-step-g2);
+  border-color: var(--bs-step-g2);
+}
+
+.bs__step-group:nth-child(3) .bs__step-btn.is-on {
+  background: var(--bs-step-g3);
+  border-color: var(--bs-step-g3);
+}
+
+.bs__step-group:nth-child(4) .bs__step-btn.is-on {
+  background: var(--bs-step-g4);
+  border-color: var(--bs-step-g4);
+}
+
+/* Glow per group (bunker theme) */
+.bass-synth[data-theme="bunker"] .bs__step-group:nth-child(1) .bs__step-btn.is-on,
+.bass-synth:not([data-theme]) .bs__step-group:nth-child(1) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(90, 184, 160, 0.4);
+}
+.bass-synth[data-theme="bunker"] .bs__step-group:nth-child(2) .bs__step-btn.is-on,
+.bass-synth:not([data-theme]) .bs__step-group:nth-child(2) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(160, 128, 192, 0.4);
+}
+.bass-synth[data-theme="bunker"] .bs__step-group:nth-child(3) .bs__step-btn.is-on,
+.bass-synth:not([data-theme]) .bs__step-group:nth-child(3) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(196, 166, 122, 0.4);
+}
+.bass-synth[data-theme="bunker"] .bs__step-group:nth-child(4) .bs__step-btn.is-on,
+.bass-synth:not([data-theme]) .bs__step-group:nth-child(4) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(154, 154, 158, 0.4);
+}
+
+/* Glow per group (vintage theme) */
+.bass-synth[data-theme="vintage"] .bs__step-group:nth-child(1) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(192, 64, 32, 0.4);
+}
+.bass-synth[data-theme="vintage"] .bs__step-group:nth-child(2) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(208, 112, 32, 0.4);
+}
+.bass-synth[data-theme="vintage"] .bs__step-group:nth-child(3) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(192, 160, 32, 0.4);
+}
+.bass-synth[data-theme="vintage"] .bs__step-group:nth-child(4) .bs__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(80, 64, 48, 0.4);
+}
+
+/* Current playback step highlight */
+.bs__step-btn.is-current {
+  box-shadow: inset 0 0 0 2px var(--bs-accent);
+}
+
+/* Selected step for editing */
+.bs__step-btn.is-selected {
+  outline: 2px solid var(--bs-accent-light);
+  outline-offset: 1px;
+}
+
+/* ============================================================
+   ACCENT ROW — 16 small accent toggles
+   ============================================================ */
+
+.bs__accent-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  padding: 0.25rem 0;
+  margin-bottom: 0.25rem;
+}
+
+.bs__accent-group {
+  display: flex;
+  gap: 3px;
+}
+
+.bs__accent-group + .bs__accent-group {
+  margin-left: 6px;
+}
+
+.bs__accent-btn {
+  width: 36px;
+  height: 20px;
+  border: 1px solid var(--bs-border);
+  border-radius: 2px;
+  background: var(--bs-surface);
+  cursor: pointer;
+  transition: background 100ms, border-color 100ms, box-shadow 100ms;
+  position: relative;
+  font-family: var(--bs-font-mono);
+  font-size: 0;
+  color: transparent;
+}
+
+.bs__accent-btn:hover {
+  border-color: var(--bs-border-light);
+}
+
+.bs__accent-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 1px;
+}
+
+.bs__accent-btn.is-on {
+  background: var(--bs-accent);
+  border-color: var(--bs-accent);
+  box-shadow: 0 0 6px rgba(90, 184, 160, 0.3);
+}
+
+.bass-synth[data-theme="vintage"] .bs__accent-btn.is-on {
+  box-shadow: 0 0 6px rgba(192, 64, 32, 0.3);
+}
+
+/* Accent indicator dot */
+.bs__accent-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bs-text-muted);
+  opacity: 0.3;
+  transition: opacity 100ms, background 100ms;
+}
+
+.bs__accent-btn.is-on::after {
+  background: var(--bs-bg);
+  opacity: 0.8;
+}
+
+/* Row label */
+.bs__accent-row-label,
+.bs__slide-row-label {
+  font-family: var(--bs-font-mono);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--bs-text-muted);
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  margin-right: 0.25rem;
+}
+
+/* ============================================================
+   SLIDE ROW — 16 small slide toggles
+   ============================================================ */
+
+.bs__slide-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  padding: 0.25rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.bs__slide-group {
+  display: flex;
+  gap: 3px;
+}
+
+.bs__slide-group + .bs__slide-group {
+  margin-left: 6px;
+}
+
+.bs__slide-btn {
+  width: 36px;
+  height: 16px;
+  border: 1px solid var(--bs-border);
+  border-radius: 2px;
+  background: var(--bs-surface);
+  cursor: pointer;
+  transition: background 100ms, border-color 100ms, box-shadow 100ms;
+  position: relative;
+  font-size: 0;
+  color: transparent;
+}
+
+.bs__slide-btn:hover {
+  border-color: var(--bs-border-light);
+}
+
+.bs__slide-btn:focus-visible {
+  outline: 2px solid var(--bs-accent);
+  outline-offset: 1px;
+}
+
+.bs__slide-btn.is-on {
+  background: var(--bs-accent-dark);
+  border-color: var(--bs-accent);
+  box-shadow: 0 0 4px rgba(90, 184, 160, 0.2);
+}
+
+.bass-synth[data-theme="vintage"] .bs__slide-btn.is-on {
+  box-shadow: 0 0 4px rgba(192, 64, 32, 0.2);
+}
+
+/* Slide indicator line */
+.bs__slide-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: var(--bs-text-muted);
+  opacity: 0.3;
+  transition: opacity 100ms, background 100ms, transform 100ms;
+  transform: translateY(-50%);
+}
+
+.bs__slide-btn.is-on::after {
+  background: var(--bs-accent-light);
+  opacity: 0.9;
+  transform: translateY(-50%) scaleY(2);
+}
+
+/* ============================================================
+   SECTION LABELS
+   ============================================================ */
+
+.bs__section-label {
+  font-family: var(--bs-font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--bs-text-muted);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .bass-synth {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .bs__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .bs__controls {
+    gap: 0.75rem;
+  }
+
+  .bs__knob {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bs__knob::after {
+    top: 3px;
+    height: 8px;
+  }
+
+  .bs__knob-cap {
+    width: 10px;
+    height: 10px;
+  }
+
+  .bs__step-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .bs__accent-btn {
+    width: 28px;
+    height: 16px;
+  }
+
+  .bs__slide-btn {
+    width: 28px;
+    height: 13px;
+  }
+
+  .bs__vu-meter {
+    width: 80px;
+    height: 48px;
+  }
+
+  .bs__vu-needle {
+    height: 28px;
+  }
+
+  .bs__note-value {
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .bs__note-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.85rem;
+  }
+
+  .bs__wave-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.6rem;
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 400px) {
+  .bs__step-btn {
+    width: 22px;
+    height: 22px;
+  }
+
+  .bs__accent-btn {
+    width: 22px;
+    height: 14px;
+  }
+
+  .bs__slide-btn {
+    width: 22px;
+    height: 11px;
+  }
+
+  .bs__step-group + .bs__step-group,
+  .bs__accent-group + .bs__accent-group,
+  .bs__slide-group + .bs__slide-group {
+    margin-left: 3px;
+  }
+
+  .bs__vu-container {
+    display: none;
+  }
+
+  .bs__bpm-value {
+    font-size: 0.9rem;
+  }
+
+  .bs__controls {
+    gap: 0.5rem;
+  }
+
+  .bs__note-display {
+    gap: 0.3rem;
+  }
+
+  .bs__note-value {
+    font-size: 0.95rem;
+    min-width: 3ch;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bs__led,
+  .bs__step-btn,
+  .bs__accent-btn,
+  .bs__slide-btn,
+  .bs__wave-btn,
+  .bs__btn,
+  .bs__note-btn,
+  .bs__vu-needle,
+  .bs__knob {
+    transition: none !important;
+  }
+
+  .bs__vu-needle {
+    display: none;
+  }
+}
