@@ -35,6 +35,9 @@
     </svg>
   </div>
 
+  <!-- Color Inversion Overlay (controlled by GLOW knob) -->
+  <div class="invert-overlay" aria-hidden="true"></div>
+
   <!-- ============================================================
        NAVIGATION
        ============================================================ -->
@@ -484,17 +487,17 @@
        ============================================================ -->
   <div class="synth-dock" role="toolbar" aria-label="Synth controls">
 
-    <!-- GRAIN Knob -->
+    <!-- GRAIN Knob — Scroll Speed Control -->
     <div class="knob-wrap synth-dock__knob-wrap"
          role="slider"
-         aria-label="Grain intensity control"
+         aria-label="Scroll speed control"
          aria-valuemin="0"
          aria-valuemax="100"
-         aria-valuenow="40"
+         aria-valuenow="50"
          tabindex="0"
          data-control="grain">
       <span class="panel-label">Grain</span>
-      <div class="knob synth-dock__knob" style="transform: rotate(-100deg);"></div>
+      <div class="knob synth-dock__knob" style="transform: rotate(0deg);"></div>
     </div>
 
     <!-- Product Switches -->
@@ -519,17 +522,17 @@
       <div class="vu-meter__needle"></div>
     </div>
 
-    <!-- GLOW Knob -->
+    <!-- GLOW Knob — Color Inversion Control -->
     <div class="knob-wrap synth-dock__knob-wrap"
          role="slider"
-         aria-label="Glow intensity control"
+         aria-label="Color inversion control"
          aria-valuemin="0"
          aria-valuemax="100"
-         aria-valuenow="50"
+         aria-valuenow="0"
          tabindex="0"
          data-control="glow">
       <span class="panel-label">Glow</span>
-      <div class="knob synth-dock__knob" style="transform: rotate(-60deg);"></div>
+      <div class="knob synth-dock__knob" style="transform: rotate(-140deg);"></div>
     </div>
 
   </div>

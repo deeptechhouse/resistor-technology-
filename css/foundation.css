@@ -82,6 +82,7 @@
   --grain-opacity:    0.04;
   --glow-intensity:   0.5;
   --parallax-depth:   0.5;
+  --color-invert:     0;
 }
 
 /* --- Reset & Base --- */
@@ -156,6 +157,17 @@ button {
   height: 100%;
 }
 
+/* --- Color Inversion Overlay (controlled by GLOW knob) --- */
+.invert-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  background: white;
+  opacity: var(--color-invert);
+}
+
 /* --- Skip to Content (A11y) --- */
 .skip-link {
   position: absolute;
@@ -218,6 +230,10 @@ button {
   }
 
   .grain-overlay {
+    display: none;
+  }
+
+  .invert-overlay {
     display: none;
   }
 }
