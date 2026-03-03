@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/synth-elements.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="drum-machine/drum-machine.css">
 </head>
 <body>
 
@@ -48,6 +49,7 @@
       <a href="#raiveflier" class="nav__link link-animated">raiveFlier</a>
       <a href="#resistor" class="nav__link link-animated">Resistor</a>
       <a href="#technology" class="nav__link link-animated">Technology</a>
+      <a href="#dr-fun" class="nav__link link-animated">Dr_Fun</a>
       <a href="#contact" class="nav__link link-animated">Contact</a>
     </div>
 
@@ -63,6 +65,7 @@
     <a href="#raiveflier" class="nav__mobile-link">raiveFlier</a>
     <a href="#resistor" class="nav__mobile-link">Resistor</a>
     <a href="#technology" class="nav__mobile-link">Technology</a>
+    <a href="#dr-fun" class="nav__mobile-link">Dr_Fun</a>
     <a href="#contact" class="nav__mobile-link">Contact</a>
   </div>
 
@@ -448,6 +451,35 @@
     </section>
 
     <!-- ============================================================
+         Dr_Fun — Interactive Drum Machine
+         ============================================================ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="dr-fun" class="section section--dr-fun accent-brass" aria-label="Dr_Fun drum machine">
+      <div class="section__inner">
+
+        <div class="section-header reveal" style="text-align: center; max-width: 600px; margin: 0 auto var(--space-lg);">
+          <span class="section-header__label">Interactive</span>
+          <h2 class="section-header__title">Dr_Fun</h2>
+          <p class="section-header__tagline">Web Audio Drum Machine</p>
+        </div>
+
+        <div class="reveal reveal--delay-1">
+          <div class="drum-machine" id="site-drum-machine" data-theme="bunker"></div>
+        </div>
+
+        <div class="tech-badges reveal reveal--delay-2" style="justify-content: center; margin-top: var(--space-lg);">
+          <span class="badge">Web Audio API</span>
+          <span class="badge">Zero Dependencies</span>
+          <span class="badge">8 Synth Voices</span>
+          <span class="badge">64 Steps</span>
+          <span class="badge">Dual Themes</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
          CONTACT
          ============================================================ -->
     <div class="section-divider" aria-hidden="true"></div>
@@ -474,6 +506,7 @@
       <nav class="footer__links" aria-label="Footer navigation">
         <a href="#raiveflier" class="footer__link">raiveFlier</a>
         <a href="#resistor" class="footer__link">Resistor</a>
+        <a href="#dr-fun" class="footer__link">Dr_Fun</a>
         <a href="https://github.com/deeptechhouse" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="#contact" class="footer__link">Contact</a>
       </nav>
@@ -541,6 +574,15 @@
   <script src="js/synth-hero.js"></script>
   <script src="js/scroll-animations.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- Dr_Fun Drum Machine (ES Module — manual init for site integration) -->
+  <script type="module">
+    import { DrumMachine } from './drum-machine/js/DrumMachine.js';
+    const container = document.getElementById('site-drum-machine');
+    if (container) {
+      new DrumMachine(container, { bpm: 120, theme: 'bunker' });
+    }
+  </script>
 
 </body>
 </html>

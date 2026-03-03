@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Directory Index — drum-machine/</title>
+  <style>
+    body { font-family: 'IBM Plex Mono', monospace; background: #0a0a0c; color: #d8d5cd; padding: 2rem; max-width: 800px; margin: 0 auto; }
+    h1 { color: #c4a67a; font-size: 1.25rem; margin-bottom: 0.5rem; }
+    h2 { color: #9a9a9e; font-size: 0.875rem; margin-top: 1.5rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.15em; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    th, td { text-align: left; padding: 0.4rem 0.75rem; border-bottom: 1px solid #2a2a30; font-size: 0.8rem; }
+    th { color: #6a6a70; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.65rem; }
+    td:first-child { color: #c4a67a; }
+    .muted { color: #6a6a70; }
+    .deleted { color: #6a6a70; text-decoration: line-through; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>drum-machine/</h1>
+  <p class="muted">Dr_Fun Web Drum Machine — Resistor Technology</p>
+
+  <h2>Root Files</h2>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>index.html</td><td>Standalone demo page (opens drum machine independently)</td></tr>
+      <tr><td>drum-machine.css</td><td>All styles — both "bunker" and "vintage" themes, responsive breakpoints</td></tr>
+      <tr><td>dir_index.html</td><td>This directory index</td></tr>
+    </tbody>
+  </table>
+
+  <h2>js/ — JavaScript Modules (ES6)</h2>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>DrumMachine.js</td><td>Orchestrator — public API, auto-init, wires all modules together</td></tr>
+      <tr><td>AudioEngine.js</td><td>Web Audio API foundation — AudioContext, master gain, analyser, compressor, noise buffer</td></tr>
+      <tr><td>InstrumentSynth.js</td><td>8 drum synthesis recipes (BD/SD/CH/OH/CP/LT/HT/RS) — all sounds generated in browser</td></tr>
+      <tr><td>Sequencer.js</td><td>Look-ahead step scheduler — 25ms interval, 100ms look-ahead, requestAnimationFrame UI</td></tr>
+      <tr><td>PatternStore.js</td><td>Pattern data model — 8 instruments × 64 steps, per-instrument tuning, serialize/deserialize</td></tr>
+      <tr><td>UIController.js</td><td>DOM generation, event delegation, wires KnobController and VUMeterRenderer</td></tr>
+      <tr><td>KnobController.js</td><td>Reusable rotary knob — mouse/touch drag + keyboard + ARIA slider role</td></tr>
+      <tr><td>VUMeterRenderer.js</td><td>SVG needle VU meter driven by AnalyserNode — matches site dock VU style</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Deleted Files</h2>
+  <p class="muted">None</p>
+
+  <p class="muted" style="margin-top: 2rem; font-size: 0.65rem;">Last updated: 2026-03-03</p>
+</body>
+</html>

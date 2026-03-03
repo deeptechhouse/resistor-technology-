@@ -18,6 +18,16 @@ Pure static site — HTML + CSS + vanilla JavaScript with zero build dependencie
 | `js/synth-hero.js` | Interactivity | Knob/fader drag, VU scroll velocity, patch jack |
 | `js/scroll-animations.js` | Animation | Scroll reveals, section LED indicators, parallax |
 | `js/main.js` | Navigation | Nav scroll blur, mobile menu, smooth scroll |
+| `drum-machine/` | Feature Module | Dr_Fun web drum machine (self-contained, embeddable) |
+| `drum-machine/drum-machine.css` | Styles | Dual-theme CSS (bunker + vintage), responsive |
+| `drum-machine/js/DrumMachine.js` | Orchestrator | Public API, auto-init, wires all modules |
+| `drum-machine/js/AudioEngine.js` | Audio | Web Audio API context, gain, analyser, compressor |
+| `drum-machine/js/InstrumentSynth.js` | Audio | 8 synthesized drum voices (808-style) |
+| `drum-machine/js/Sequencer.js` | Timing | Look-ahead scheduler with AudioContext timing |
+| `drum-machine/js/PatternStore.js` | Data | 8×64 step grid, tuning, serialize/deserialize |
+| `drum-machine/js/UIController.js` | UI | DOM generation, event delegation |
+| `drum-machine/js/KnobController.js` | UI | Rotary knob (drag + keyboard + ARIA) |
+| `drum-machine/js/VUMeterRenderer.js` | UI | SVG needle VU meter |
 | `assets/` | Static Assets | Images, SVGs, screenshots (placeholder) |
 
 ## Key Entry Points

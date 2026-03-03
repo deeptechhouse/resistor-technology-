@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr_Fun — Web Drum Machine · Resistor Technology</title>
+  <meta name="description" content="Dr_Fun: A synthesized 16-step drum machine with 8 voices, 4 pattern pages, and dual themes. Built with Web Audio API.">
+  <meta name="theme-color" content="#0a0a0c">
+
+  <!-- Fonts (same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Drum Machine Styles -->
+  <link rel="stylesheet" href="drum-machine.css">
+
+  <style>
+    /* Standalone page styles */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background: #0a0a0c;
+      color: #d8d5cd;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #c4a67a;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .page-subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #6a6a70;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .page-footer {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: #6a6a70;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .page-footer a {
+      color: #c4a67a;
+      text-decoration: none;
+    }
+
+    .page-footer a:hover {
+      text-decoration: underline;
+    }
+
+    :focus-visible {
+      outline: 2px solid #c4a67a;
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">Dr_Fun</h1>
+  <p class="page-subtitle">Web Drum Machine</p>
+
+  <!-- Drum Machine (auto-init via data attribute) -->
+  <div class="drum-machine" data-theme="bunker" data-auto-init data-bpm="120"></div>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 <a href="https://resistor.technology">Resistor Technology</a></p>
+  </footer>
+
+  <!-- ES Module entry point -->
+  <script type="module" src="js/DrumMachine.js"></script>
+
+</body>
+</html>

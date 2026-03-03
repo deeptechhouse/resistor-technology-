@@ -1,0 +1,773 @@
+/* ============================================================
+   DRUM-MACHINE.CSS — Dr_Fun Drum Machine Styles
+   Resistor Technology · resistor.technology
+
+   Two themes: "bunker" (site default) and "vintage" (classic 808).
+   All custom properties prefixed --dm-* to avoid conflicts.
+   All classes BEM-prefixed dm__ to avoid conflicts.
+   ============================================================ */
+
+/* --- Theme: Bunker (default — matches site aesthetic) --- */
+.drum-machine,
+.drum-machine[data-theme="bunker"] {
+  --dm-bg:              #0e0e12;
+  --dm-surface:         #14141a;
+  --dm-surface-raised:  #1e1e24;
+  --dm-border:          #2a2a30;
+  --dm-border-light:    #3a3a40;
+  --dm-text:            #d8d5cd;
+  --dm-text-secondary:  #9a9a9e;
+  --dm-text-muted:      #6a6a70;
+  --dm-accent:          #c4a67a;
+  --dm-accent-light:    #d4be88;
+  --dm-accent-dark:     #a08050;
+
+  /* Step group colors (4 groups of 4) */
+  --dm-step-g1:         #c4a67a;   /* brass */
+  --dm-step-g2:         #a080c0;   /* amethyst */
+  --dm-step-g3:         #6aaa9a;   /* teal */
+  --dm-step-g4:         #9a9a9e;   /* silver */
+
+  /* VU meter */
+  --dm-vu-bg:           linear-gradient(to bottom, #2a2018, #1a1408);
+  --dm-vu-border:       #5a4a20;
+  --dm-vu-text:         rgba(200, 160, 60, 0.5);
+  --dm-vu-needle:       rgba(200, 160, 60, 0.9);
+  --dm-vu-needle-tip:   rgba(200, 160, 60, 0.3);
+  --dm-vu-scale:        rgba(200, 160, 60, 0.25);
+  --dm-vu-hub:          #8a7a40;
+
+  /* LED */
+  --dm-led-on:          #c4a67a;
+  --dm-led-off:         #1a1a20;
+  --dm-led-glow:        rgba(196, 166, 122, 0.6);
+
+  /* Fonts */
+  --dm-font-display:    'Space Grotesk', sans-serif;
+  --dm-font-mono:       'IBM Plex Mono', monospace;
+}
+
+/* --- Theme: Vintage (classic 808) --- */
+.drum-machine[data-theme="vintage"] {
+  --dm-bg:              #2a2018;
+  --dm-surface:         #342a1e;
+  --dm-surface-raised:  #3e3428;
+  --dm-border:          #504030;
+  --dm-border-light:    #6a5a48;
+  --dm-text:            #f0e8d8;
+  --dm-text-secondary:  #c8c0b0;
+  --dm-text-muted:      #8a8070;
+  --dm-accent:          #f0c040;
+  --dm-accent-light:    #ffd860;
+  --dm-accent-dark:     #c8a030;
+
+  /* Classic 808 step colors */
+  --dm-step-g1:         #e84040;   /* red */
+  --dm-step-g2:         #f09030;   /* orange */
+  --dm-step-g3:         #f0c040;   /* yellow */
+  --dm-step-g4:         #e0d8c8;   /* white */
+
+  /* VU meter — cream face */
+  --dm-vu-bg:           linear-gradient(to bottom, #f5f0e0, #e8e0c8);
+  --dm-vu-border:       #a09070;
+  --dm-vu-text:         rgba(40, 30, 20, 0.6);
+  --dm-vu-needle:       rgba(20, 15, 10, 0.9);
+  --dm-vu-needle-tip:   rgba(20, 15, 10, 0.3);
+  --dm-vu-scale:        rgba(40, 30, 20, 0.25);
+  --dm-vu-hub:          #504030;
+
+  /* LED */
+  --dm-led-on:          #f04040;
+  --dm-led-off:         #2a1a1a;
+  --dm-led-glow:        rgba(240, 64, 64, 0.6);
+
+  /* Fonts — fallback stack */
+  --dm-font-display:    Helvetica, Arial, sans-serif;
+  --dm-font-mono:       'Courier New', Courier, monospace;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.drum-machine {
+  background: var(--dm-bg);
+  border: 1px solid var(--dm-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  font-family: var(--dm-font-mono);
+  color: var(--dm-text);
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================================
+   HEADER ROW
+   ============================================================ */
+
+.dm__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dm__title {
+  font-family: var(--dm-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dm-accent);
+}
+
+.dm__transport {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dm__btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--dm-border-light);
+  border-radius: 4px;
+  background: var(--dm-surface);
+  color: var(--dm-text-secondary);
+  font-family: var(--dm-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.dm__btn:hover {
+  background: var(--dm-surface-raised);
+  border-color: var(--dm-accent);
+  color: var(--dm-text);
+}
+
+.dm__btn:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 2px;
+}
+
+.dm__btn.is-active {
+  background: var(--dm-accent);
+  border-color: var(--dm-accent);
+  color: var(--dm-bg);
+}
+
+.dm__theme-toggle {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--dm-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--dm-text-muted);
+  font-family: var(--dm-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms;
+}
+
+.dm__theme-toggle:hover {
+  color: var(--dm-text);
+  border-color: var(--dm-border-light);
+}
+
+.dm__theme-toggle:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   LED STRIP — 16 position indicators
+   ============================================================ */
+
+.dm__leds {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.dm__led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dm-led-off);
+  transition: background 80ms, box-shadow 80ms;
+  flex-shrink: 0;
+}
+
+.dm__led.is-active {
+  background: var(--dm-led-on);
+  box-shadow: 0 0 6px var(--dm-led-glow), 0 0 12px var(--dm-led-glow);
+}
+
+/* ============================================================
+   CONTROLS ROW — Volume, Tune, BPM, VU Meter
+   ============================================================ */
+
+.dm__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.dm__knob-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* --- Rotary Knob (matches site knob style) --- */
+
+.dm__knob-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+
+.dm__knob-wrap:active {
+  cursor: grabbing;
+}
+
+.dm__knob-wrap.is-active {
+  cursor: grabbing;
+}
+
+.dm__knob-label {
+  font-family: var(--dm-font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--dm-text-muted);
+  text-align: center;
+}
+
+.dm__knob {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(from 200deg, #1a1a1a, #3a3a3a 90deg, #2a2a2a 180deg, #3a3a3a 270deg, #1a1a1a);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111;
+  transition: box-shadow 150ms;
+}
+
+.dm__knob:hover {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 2px #111,
+    0 0 12px rgba(196, 166, 122, 0.2);
+}
+
+.dm__knob-wrap:focus-visible .dm__knob {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    0 0 0 3px var(--dm-accent);
+}
+
+/* Knob hub */
+.dm__knob-cap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #444, #222);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Knob pointer */
+.dm__knob::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: #e8e0d0;
+  border-radius: 1px;
+}
+
+.dm__knob--small {
+  /* Smaller knob variant */
+}
+
+.dm__knob--small .dm__knob {
+  width: 36px;
+  height: 36px;
+}
+
+.dm__knob--small .dm__knob::after {
+  top: 3px;
+  height: 8px;
+}
+
+.dm__knob--small .dm__knob-cap {
+  width: 10px;
+  height: 10px;
+}
+
+/* --- BPM Display --- */
+
+.dm__bpm-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dm__bpm-value {
+  font-family: var(--dm-font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--dm-accent);
+  min-width: 3ch;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--dm-border);
+  border-radius: 3px;
+}
+
+.dm__bpm-label {
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--dm-text-muted);
+}
+
+.dm__bpm-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--dm-border);
+  border-radius: 3px;
+  background: var(--dm-surface);
+  color: var(--dm-text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+  line-height: 1;
+}
+
+.dm__bpm-btn:hover {
+  background: var(--dm-surface-raised);
+  color: var(--dm-text);
+}
+
+.dm__bpm-btn:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 1px;
+}
+
+/* --- VU Meter Container --- */
+
+.dm__vu-container {
+  flex-shrink: 0;
+}
+
+.dm__vu-meter {
+  width: 100px;
+  height: 56px;
+  background: var(--dm-vu-bg);
+  border: 1px solid var(--dm-vu-border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(200, 160, 60, 0.08);
+}
+
+.dm__vu-face {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--dm-font-mono);
+  font-size: 6px;
+  color: var(--dm-vu-text);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dm__vu-scale {
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  right: 10px;
+  height: 26px;
+  border-top: 1px solid var(--dm-vu-scale);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.dm__vu-marks {
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--dm-font-mono);
+  font-size: 5px;
+  color: var(--dm-vu-text);
+}
+
+.dm__vu-needle {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(to top, var(--dm-vu-needle), var(--dm-vu-needle-tip));
+  transform-origin: bottom center;
+  transform: rotate(-30deg);
+  box-shadow: 0 0 3px rgba(200, 160, 60, 0.3);
+}
+
+.dm__vu-needle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--dm-vu-hub);
+  border-radius: 50%;
+}
+
+/* ============================================================
+   INSTRUMENT BUTTONS
+   ============================================================ */
+
+.dm__instruments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.dm__inst-btn {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--dm-border);
+  border-radius: 4px;
+  background: var(--dm-surface);
+  color: var(--dm-text-muted);
+  font-family: var(--dm-font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms;
+  min-width: 48px;
+  text-align: center;
+}
+
+.dm__inst-btn:hover {
+  background: var(--dm-surface-raised);
+  color: var(--dm-text-secondary);
+}
+
+.dm__inst-btn:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 2px;
+}
+
+.dm__inst-btn.is-selected {
+  background: var(--dm-accent-dark);
+  border-color: var(--dm-accent);
+  color: var(--dm-text);
+}
+
+/* ============================================================
+   PAGE BUTTONS
+   ============================================================ */
+
+.dm__pages {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.dm__page-btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--dm-border);
+  border-radius: 3px;
+  background: var(--dm-surface);
+  color: var(--dm-text-muted);
+  font-family: var(--dm-font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.dm__page-btn:hover {
+  background: var(--dm-surface-raised);
+  color: var(--dm-text-secondary);
+}
+
+.dm__page-btn:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 2px;
+}
+
+.dm__page-btn.is-active {
+  background: var(--dm-accent-dark);
+  border-color: var(--dm-accent);
+  color: var(--dm-text);
+}
+
+/* Page has-data indicator dot */
+.dm__page-btn .dm__page-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  margin-left: 4px;
+  vertical-align: middle;
+  transition: background 150ms;
+}
+
+.dm__page-btn.has-data .dm__page-dot {
+  background: var(--dm-accent);
+}
+
+/* ============================================================
+   STEP GRID — 16 steps in 4 groups of 4
+   ============================================================ */
+
+.dm__step-grid {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+/* Visual gap between groups of 4 */
+.dm__step-group {
+  display: flex;
+  gap: 3px;
+}
+
+.dm__step-group + .dm__step-group {
+  margin-left: 6px;
+}
+
+.dm__step-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--dm-border);
+  border-radius: 3px;
+  background: var(--dm-surface);
+  cursor: pointer;
+  transition: background 100ms, border-color 100ms, box-shadow 100ms;
+  position: relative;
+}
+
+.dm__step-btn:hover {
+  border-color: var(--dm-border-light);
+}
+
+.dm__step-btn:focus-visible {
+  outline: 2px solid var(--dm-accent);
+  outline-offset: 1px;
+}
+
+/* Active step (has a hit programmed) — group colors via additional vars */
+.dm__step-group:nth-child(1) .dm__step-btn.is-on {
+  background: var(--dm-step-g1);
+  border-color: var(--dm-step-g1);
+}
+
+.dm__step-group:nth-child(2) .dm__step-btn.is-on {
+  background: var(--dm-step-g2);
+  border-color: var(--dm-step-g2);
+}
+
+.dm__step-group:nth-child(3) .dm__step-btn.is-on {
+  background: var(--dm-step-g3);
+  border-color: var(--dm-step-g3);
+}
+
+.dm__step-group:nth-child(4) .dm__step-btn.is-on {
+  background: var(--dm-step-g4);
+  border-color: var(--dm-step-g4);
+}
+
+/* Glow per group (bunker theme) */
+.drum-machine[data-theme="bunker"] .dm__step-group:nth-child(1) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(196, 166, 122, 0.4);
+}
+.drum-machine[data-theme="bunker"] .dm__step-group:nth-child(2) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(160, 128, 192, 0.4);
+}
+.drum-machine[data-theme="bunker"] .dm__step-group:nth-child(3) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(106, 170, 154, 0.4);
+}
+.drum-machine[data-theme="bunker"] .dm__step-group:nth-child(4) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(154, 154, 158, 0.4);
+}
+
+/* Glow per group (vintage theme) */
+.drum-machine[data-theme="vintage"] .dm__step-group:nth-child(1) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(232, 64, 64, 0.4);
+}
+.drum-machine[data-theme="vintage"] .dm__step-group:nth-child(2) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(240, 144, 48, 0.4);
+}
+.drum-machine[data-theme="vintage"] .dm__step-group:nth-child(3) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(240, 192, 64, 0.4);
+}
+.drum-machine[data-theme="vintage"] .dm__step-group:nth-child(4) .dm__step-btn.is-on {
+  box-shadow: 0 0 8px rgba(224, 216, 200, 0.4);
+}
+
+/* Current playback step highlight */
+.dm__step-btn.is-current {
+  box-shadow: inset 0 0 0 2px var(--dm-accent);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .drum-machine {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .dm__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .dm__controls {
+    gap: 0.75rem;
+  }
+
+  .dm__knob {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dm__knob::after {
+    top: 3px;
+    height: 8px;
+  }
+
+  .dm__knob-cap {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dm__step-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dm__vu-meter {
+    width: 80px;
+    height: 48px;
+  }
+
+  .dm__vu-needle {
+    height: 28px;
+  }
+
+  .dm__instruments {
+    gap: 0.25rem;
+  }
+
+  .dm__inst-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.6rem;
+    min-width: 38px;
+  }
+}
+
+@media (max-width: 400px) {
+  .dm__step-btn {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dm__step-group + .dm__step-group {
+    margin-left: 3px;
+  }
+
+  .dm__vu-container {
+    display: none;
+  }
+
+  .dm__bpm-value {
+    font-size: 0.9rem;
+  }
+
+  .dm__controls {
+    gap: 0.5rem;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .dm__led,
+  .dm__step-btn,
+  .dm__inst-btn,
+  .dm__btn,
+  .dm__page-btn,
+  .dm__vu-needle,
+  .dm__knob {
+    transition: none !important;
+  }
+
+  .dm__vu-needle {
+    display: none;
+  }
+}

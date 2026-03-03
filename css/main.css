@@ -164,6 +164,14 @@
   );
 }
 
+.section--dr-fun {
+  background: linear-gradient(180deg,
+    var(--color-bg) 0%,
+    rgba(196, 166, 122, 0.03) 50%,
+    var(--color-bg) 100%
+  );
+}
+
 /* --- Divider --- */
 .section-divider {
   width: 100%;
