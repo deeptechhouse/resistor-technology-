@@ -96,7 +96,25 @@ export class AudioEngine {
     // Pre-compute 2 seconds of white noise
     this.#noiseBuffer = this.#createNoiseBuffer(2);
 
+    // iOS Safari audio unlock: play a silent buffer through the
+    // destination to wake the audio hardware during a user gesture.
+    this.#unlockiOS();
+
     this.#initialized = true;
+  }
+
+  /**
+   * iOS audio unlock — play a 1-sample silent buffer directly to
+   * the destination node. Required on iOS Safari where the AudioContext
+   * starts suspended and hardware won't produce sound until something
+   * is routed to the destination from a user gesture (click/touchend).
+   */
+  #unlockiOS() {
+    const buffer = this.#ctx.createBuffer(1, 1, this.#ctx.sampleRate);
+    const source = this.#ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.#ctx.destination);
+    source.start();
   }
 
   /**

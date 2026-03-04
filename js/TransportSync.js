@@ -30,11 +30,22 @@ export class TransportSync {
   /**
    * Create or resume the shared AudioContext.
    * Must be called from a user gesture on first invocation.
+   * Includes iOS Safari unlock: plays a silent buffer to wake the
+   * audio hardware, which iOS requires before producing any sound.
    * @returns {AudioContext}
    */
   init() {
     if (!this.#sharedCtx) {
       this.#sharedCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      // iOS audio unlock: play 1-sample silent buffer to destination.
+      // Without this, iOS Safari creates the context but the hardware
+      // stays asleep — sequencer LEDs move but no audio comes out.
+      const buf = this.#sharedCtx.createBuffer(1, 1, this.#sharedCtx.sampleRate);
+      const src = this.#sharedCtx.createBufferSource();
+      src.buffer = buf;
+      src.connect(this.#sharedCtx.destination);
+      src.start();
     }
     if (this.#sharedCtx.state === 'suspended') {
       this.#sharedCtx.resume();
